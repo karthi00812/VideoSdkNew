@@ -8,9 +8,15 @@ let socketIO = null;
 export const registerSocketEvents = (socket) => {
   socketIO = socket;
 
-  socket.on("connect", () => {
-    store.setSocketId(socket.id);
-    ui.updatePersonalCode(socket.id);
+  // socket.on("connect", () => {
+  //   store.setSocketId(socket.id);
+  //   ui.updatePersonalCode(socket.id);
+  // });
+
+  socket.on("emitUser", (msg) => {
+    console.log(msg);
+    store.setSocketId(msg.id.connection_id);
+    ui.updatePersonalCode(msg.id.user);
   });
 
   socket.on("pre-offer", (data) => {

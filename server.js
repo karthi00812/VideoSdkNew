@@ -15,10 +15,19 @@ app.get("/", (req, res) => {
 
 let connectedPeers = [];
 const hashMap = new Map();
+let user = "";
 
 io.on("connection", (socket) => {
 
-  hashMap.set(`User_${hashMap.size + 1}`, socket.id);
+  user={
+    "user":`User_${hashMap.size}`,
+     "connection_id":socket.id
+  };
+  hashMap.set( socket.id,`User_${hashMap.size}`,);
+
+  socket.emit('emitUser', {
+    id: user
+  });
 
   socket.on("pre-offer", (data) => {
     const { calleePersonalCode, callType } = data;
@@ -80,10 +89,13 @@ io.on("connection", (socket) => {
   });
 
   socket.on("disconnect", () => {
-    const newConnectedPeers = connectedPeers.filter(
-      (peerSocketId) => peerSocketId !== socket.id
-    );
-    connectedPeers = newConnectedPeers;
+
+    // const newConnectedPeers = connectedPeers.filter(
+    //   (peerSocketId) => peerSocketId !== socket.id
+    // );
+    // connectedPeers = newConnectedPeers;
+    hashMap.delete(socket.id);
+
   });
 });
 
