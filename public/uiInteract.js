@@ -1,0 +1,119 @@
+
+import * as constants from "./constants.js";
+
+export const updateLocalVideo = (stream) => {
+    const localVideo = document.getElementById("local_video");
+    localVideo.srcObject = stream;
+
+    localVideo.addEventListener("loadedmetadata", () => {
+        localVideo.play();
+    });
+};
+
+export const showVideoCallButtons = () => {
+    const personalCodeVideoButton = document.getElementById(
+        "call_buttons"
+    );
+    // showElement(personalCodeVideoButton);
+};
+
+const showElement = (element) => {
+    if (element.classList.contains("display_none")) {
+        element.classList.remove("display_none");
+    }
+};
+
+
+export const updatePersonalCode = (personalCode) => {
+    const personal = document.getElementById(
+        "pc"
+    );
+    personal.textContent = personal.textContent + personalCode;
+};
+
+export const showCallingDialog = (rejectCallHandler) => {
+
+    const dialog = document.getElementById("call_display");
+    dialog.style.display = "flex";
+    showElement(dialog);
+};
+
+export const removeAllDialogs = () => {
+    const dialog = document.getElementById("call_display");
+    dialog.style.display = "none";
+};
+
+export const showInfoDialog = (preOfferAnswer) => {
+    let infoDialog = null;
+
+    if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED) {
+        //   infoDialog = elements.getInfoDialog(
+        //     "Call rejected",
+        //     "Callee rejected your call"
+        //   );
+        alert("call rejected");
+    }
+
+    if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
+        //   infoDialog = elements.getInfoDialog(
+        //     "Callee not found",
+        //     "Please check personal code"
+        //   );
+        alert("callee not found");
+    }
+
+    if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
+        //   infoDialog = elements.getInfoDialog(
+        //     "Call is not possible",
+        //     "Probably callee is busy. Please try againg later"
+        //   );
+        alert("Call is not possible");
+    }
+};
+
+export const showIncomingCallDialog = (
+    callType,
+    acceptCallHandler,
+    rejectCallHandler
+) => {
+    const callTypeInfo =
+        callType === constants.callType.CHAT_PERSONAL_CODE ? "Chat" : "Video";
+
+        Swal.fire({
+            title: "Incoming Call!!!",
+            showDenyButton: false,
+            showCancelButton: true,
+            confirmButtonText: "Accept",
+            denyButtonText: `Cancel`
+          }).then((result) => {
+            if (result.isConfirmed) {
+                acceptCallHandler();
+            } else if (result.isDenied) {
+                rejectCallHandler();
+            }
+          });
+};
+
+export const updateRemoteVideo = (stream) => {
+    const remoteVideo = document.getElementById("remote_video");
+    remoteVideo.srcObject = stream;
+    showElement(document.getElementById("call_buttons"));
+  };  
+
+  // ui call buttons
+
+const micOnImgSrc = "./images/mic.png";
+const micOffImgSrc = "./images/micOff.png";
+
+export const updateMicButton = (micActive) => {
+  const micButtonImage = document.getElementById("mic_button_image");
+  micButtonImage.src = micActive ? micOffImgSrc : micOnImgSrc;
+};
+
+const cameraOnImgSrc = "./images/camera.png";
+const cameraOffImgSrc = "./images/cameraOff.png";
+
+export const updateCameraButton = (cameraActive) => {
+  const cameraButtonImage = document.getElementById("camera_button_image");
+  cameraButtonImage.src = cameraActive ? cameraOffImgSrc : cameraOnImgSrc;
+};
