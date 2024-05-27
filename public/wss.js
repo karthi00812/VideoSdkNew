@@ -15,7 +15,7 @@ export const registerSocketEvents = (socket) => {
 
   socket.on("emitUser", (msg) => {
     console.log(msg);
-    store.setSocketId(msg.id.connection_id);
+    store.setSocketId(msg.id.connection_id, msg.id.user);
     ui.updatePersonalCode(msg.id.user);
   });
 

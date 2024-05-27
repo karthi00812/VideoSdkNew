@@ -15,15 +15,18 @@ app.get("/", (req, res) => {
 
 let connectedPeers = [];
 const hashMap = new Map();
+const hashMapUser = new Map();
+
 let user = "";
 
 io.on("connection", (socket) => {
 
-  user={
-    "user":`User_${hashMap.size}`,
-     "connection_id":socket.id
+  user = {
+    "user": `User_${hashMap.size}`,
+    "connection_id": socket.id
   };
-  hashMap.set( socket.id,`User_${hashMap.size}`,);
+  hashMap.set(socket.id, `User_${hashMap.size}`);
+  hashMapUser.set(user.user, user.connection_id);
 
   socket.emit('emitUser', {
     id: user
@@ -31,19 +34,18 @@ io.on("connection", (socket) => {
 
   socket.on("pre-offer", (data) => {
     const { calleePersonalCode, callType } = data;
+    console.log(data);
     // const connectedPeer = connectedPeers.find(
     //   (peerSocketId) => peerSocketId === calleePersonalCode
     // );
 
-    const connectedPeer = connectedPeers.has(calleePersonalCode) ? connectedPeers.has(calleePersonalCode).get(calleePersonalCode) : "";
-  
+    const connectedPeer = hashMapUser.has(calleePersonalCode) ? hashMapUser.get(calleePersonalCode) : "";
     if (connectedPeer) {
       const data = {
         callerSocketId: socket.id,
         callType,
       };
-      calleePersonalCode=connectedPeer;
-      io.to(calleePersonalCode).emit("pre-offer", data);
+      io.to(connectedPeer).emit("pre-offer", data);
     } else {
       const data = {
         preOfferAnswer: "CALLEE_NOT_FOUND",
@@ -55,10 +57,10 @@ io.on("connection", (socket) => {
   socket.on("pre-offer-answer", (data) => {
     const { callerSocketId } = data;
 
-    const connectedPeer = connectedPeers.find(
-      (peerSocketId) => peerSocketId === callerSocketId
-    );
-
+    // const connectedPeer = connectedPeers.find(
+    //   (peerSocketId) => peerSocketId === callerSocketId
+    // );
+    const connectedPeer = hashMap.has(callerSocketId);
     if (connectedPeer) {
       io.to(data.callerSocketId).emit("pre-offer-answer", data);
     }
@@ -67,10 +69,11 @@ io.on("connection", (socket) => {
   socket.on("webRTC-signaling", (data) => {
     const { connectedUserSocketId } = data;
 
-    const connectedPeer = connectedPeers.find(
-      (peerSocketId) => peerSocketId === connectedUserSocketId
-    );
+    // const connectedPeer = connectedPeers.find(
+    //   (peerSocketId) => peerSocketId === connectedUserSocketId
+    // );
 
+    const connectedPeer = hashMap.has(connectedUserSocketId);
     if (connectedPeer) {
       io.to(connectedUserSocketId).emit("webRTC-signaling", data);
     }
@@ -79,9 +82,11 @@ io.on("connection", (socket) => {
   socket.on("user-hanged-up", (data) => {
     const { connectedUserSocketId } = data;
 
-    const connectedPeer = connectedPeers.find(
-      (peerSocketId) => peerSocketId === connectedUserSocketId
-    );
+    // const connectedPeer = connectedPeers.find(
+    //   (peerSocketId) => peerSocketId === connectedUserSocketId
+    // );
+
+    const connectedPeer=hashMap.has(connectedUserSocketId);
 
     if (connectedPeer) {
       io.to(connectedUserSocketId).emit("user-hanged-up");

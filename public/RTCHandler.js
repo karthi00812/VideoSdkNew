@@ -125,6 +125,8 @@ export const sendPreOffer = (callType, calleePersonalCode) => {
 };
 
 export const handlePreOffer = (data) => {
+  
+  console.log("handlePreOffer", data);
   const { callType, callerSocketId } = data;
 
   if (!checkCallPossibility()) {

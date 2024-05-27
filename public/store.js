@@ -8,12 +8,14 @@ let state = {
   screenSharingStream: null,
   allowConnectionsFromStrangers: false,
   callState: constants.callState.CALL_AVAILABLE_ONLY_CHAT,
+  userName:null
 };
 
-export const setSocketId = (socketId) => {
+export const setSocketId = (socketId,userName) => {
   state = {
     ...state,
     socketId,
+    userName
   };
 };
 
