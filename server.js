@@ -13,6 +13,14 @@ app.get("/", (req, res) => {
   res.sendFile(__dirname + "/public/index.html");
 });
 
+app.get("/customer", (req, res) => {
+  res.sendFile(__dirname + "/public/customer.html");
+});
+
+app.get("/agent", (req, res) => {
+  res.sendFile(__dirname + "/public/agent.html");
+});
+
 let connectedPeers = [];
 const hashMap = new Map();
 const hashMapUser = new Map();
