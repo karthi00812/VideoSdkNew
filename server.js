@@ -61,7 +61,7 @@ io.on("connection", (socket) => {
     //   (peerSocketId) => peerSocketId === callerSocketId
     // );
     const connectedPeer = hashMap.has(callerSocketId);
-    console.log("pre-offer-answer",data);
+    console.log("pre-offer-answer", data);
     if (connectedPeer) {
       io.to(data.callerSocketId).emit("pre-offer-answer", data);
     }
@@ -69,15 +69,21 @@ io.on("connection", (socket) => {
 
   socket.on("webRTC-signaling", (data) => {
     const { connectedUserSocketId } = data;
+    let connectedUserSocketIdl;
 
-    console.log("webrtc"+connectedUserSocketId);
-    let connectedUserSocketIdl=hashMapUser.has(connectedUserSocketId) ? hashMapUser.get(connectedUserSocketId) : "";
+    if (!hashMap.has(connectedUserSocketId)) {
+      connectedUserSocketIdl = hashMapUser.has(connectedUserSocketId) ? hashMapUser.get(connectedUserSocketId) : "";
+    } else {
+      connectedUserSocketIdl = connectedUserSocketId;
+    }
+
+    console.log("webrtc" + connectedUserSocketIdl, data.connectedUserSocketId);
     // const connectedPeer = connectedPeers.find(
     //   (peerSocketId) => peerSocketId === connectedUserSocketId
     // );
 
     if (connectedUserSocketIdl) {
-      console.log("webrtcIN",connectedUserSocketIdl);
+      console.log("webrtcIN" + connectedUserSocketIdl, data.connectedUserSocketId);
       io.to(connectedUserSocketIdl).emit("webRTC-signaling", data);
     }
   });
@@ -89,7 +95,7 @@ io.on("connection", (socket) => {
     //   (peerSocketId) => peerSocketId === connectedUserSocketId
     // );
 
-    const connectedPeer=hashMap.has(connectedUserSocketId);
+    const connectedPeer = hashMap.has(connectedUserSocketId);
 
     if (connectedPeer) {
       io.to(connectedUserSocketId).emit("user-hanged-up");
