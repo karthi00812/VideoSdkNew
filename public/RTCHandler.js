@@ -125,7 +125,7 @@ export const sendPreOffer = (callType, calleePersonalCode) => {
 };
 
 export const handlePreOffer = (data) => {
-  
+
   console.log("handlePreOffer", data);
   const { callType, callerSocketId } = data;
 
@@ -194,7 +194,7 @@ const sendPreOfferAnswer = (preOfferAnswer, callerSocketId = null) => {
 
 export const handlePreOfferAnswer = (data) => {
   const { preOfferAnswer } = data;
-
+  console.log("preofferAnswer", data);
   ui.removeAllDialogs();
 
   if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {

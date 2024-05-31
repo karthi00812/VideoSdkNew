@@ -61,6 +61,7 @@ io.on("connection", (socket) => {
     //   (peerSocketId) => peerSocketId === callerSocketId
     // );
     const connectedPeer = hashMap.has(callerSocketId);
+    console.log("pre-offer-answer",data);
     if (connectedPeer) {
       io.to(data.callerSocketId).emit("pre-offer-answer", data);
     }
@@ -69,13 +70,15 @@ io.on("connection", (socket) => {
   socket.on("webRTC-signaling", (data) => {
     const { connectedUserSocketId } = data;
 
+    console.log("webrtc"+connectedUserSocketId);
+    let connectedUserSocketIdl=hashMapUser.has(connectedUserSocketId) ? hashMapUser.get(connectedUserSocketId) : "";
     // const connectedPeer = connectedPeers.find(
     //   (peerSocketId) => peerSocketId === connectedUserSocketId
     // );
 
-    const connectedPeer = hashMap.has(connectedUserSocketId);
-    if (connectedPeer) {
-      io.to(connectedUserSocketId).emit("webRTC-signaling", data);
+    if (connectedUserSocketIdl) {
+      console.log("webrtcIN",connectedUserSocketIdl);
+      io.to(connectedUserSocketIdl).emit("webRTC-signaling", data);
     }
   });
 
