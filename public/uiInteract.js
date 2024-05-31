@@ -117,3 +117,45 @@ export const updateCameraButton = (cameraActive) => {
   const cameraButtonImage = document.getElementById("camera_button_image");
   cameraButtonImage.src = cameraActive ? cameraOffImgSrc : cameraOnImgSrc;
 };
+
+// recording
+export const showRecordingPanel = () => {
+    const recordingButtons = document.getElementById("video_recording_buttons");
+    showElement(recordingButtons);
+  
+    // hide start recording button if it is active
+    const startRecordingButton = document.getElementById(
+      "start_recording_button"
+    );
+    hideElement(startRecordingButton);
+  };
+  
+  export const resetRecordingButtons = () => {
+    const startRecordingButton = document.getElementById(
+      "start_recording_button"
+    );
+    const recordingButtons = document.getElementById("video_recording_buttons");
+  
+    hideElement(recordingButtons);
+    showElement(startRecordingButton);
+  };
+  
+  export const switchRecordingButtons = (switchForResumeButton = false) => {
+    const resumeButton = document.getElementById("resume_recording_button");
+    const pauseButton = document.getElementById("pause_recording_button");
+  
+    if (switchForResumeButton) {
+      hideElement(pauseButton);
+      showElement(resumeButton);
+    } else {
+      hideElement(resumeButton);
+      showElement(pauseButton);
+    }
+  };
+  
+
+  const hideElement = (element) => {
+    if (!element.classList.contains("display_none")) {
+      element.classList.add("display_none");
+    }
+  };

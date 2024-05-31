@@ -3,6 +3,7 @@ import * as socketCon from "./wss.js";
 import * as constants from "./constants.js"
 import * as store from "./store.js"
 import * as ui from "./uiInteract.js"
+import * as recordingUtils from "./recordingUtil.js"
 const socket = io("/");
 webRTCHandler.getLocalPreview();
 socketCon.registerSocketEvents(socket);

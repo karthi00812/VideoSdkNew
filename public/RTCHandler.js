@@ -71,6 +71,7 @@ const createPeerConnection = () => {
 
   peerConection.ontrack = (event) => {
     ui.updateRemoteVideo(event.streams[0]);
+    store.setRemoteStream(event.streams[0]);
   };
 
   // add our stream to peer connection
