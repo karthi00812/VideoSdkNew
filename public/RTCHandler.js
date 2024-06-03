@@ -15,7 +15,10 @@ const defaultConstraints = {
 const configuration = {
   iceServers: [
     {
-      urls: "stun:stun.l.google.com:13902",
+      // urls: "stun:stun.l.google.com:13902",
+      urls: 'turn:relay1.expressturn.com:3478',
+            username: 'efQCZ5U3IFYWPO884F',
+            credential: '4rtUo3uEl2T6biS6'
     },
   ],
 };
