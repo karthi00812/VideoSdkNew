@@ -15,10 +15,27 @@ const defaultConstraints = {
 const configuration = {
   iceServers: [
     {
-      // urls: "stun:stun.l.google.com:13902",
-      urls: 'turn:relay1.expressturn.com:3478',
-            username: 'efQCZ5U3IFYWPO884F',
-            credential: '4rtUo3uEl2T6biS6'
+      urls: "stun:stun.relay.metered.ca:80",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:80",
+      username: "7a217b66c4ca7b4ab7a657c9",
+      credential: "pLtb6H8lNQvUvnmy",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:80?transport=tcp",
+      username: "7a217b66c4ca7b4ab7a657c9",
+      credential: "pLtb6H8lNQvUvnmy",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:443",
+      username: "7a217b66c4ca7b4ab7a657c9",
+      credential: "pLtb6H8lNQvUvnmy",
+    },
+    {
+      urls: "turns:global.relay.metered.ca:443?transport=tcp",
+      username: "7a217b66c4ca7b4ab7a657c9",
+      credential: "pLtb6H8lNQvUvnmy",
     },
   ],
 };
