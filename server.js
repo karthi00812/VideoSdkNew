@@ -25,17 +25,25 @@ let connectedPeers = [];
 const hashMap = new Map();
 const hashMapUser = new Map();
 
-let user = "";
+let user = "", connectedUser = [];
 
 io.on("connection", (socket) => {
 
-  user = {
-    "user": `User_${hashMap.size}`,
-    "connection_id": socket.id
-  };
-  hashMap.set(socket.id, `User_${hashMap.size}`);
-  hashMapUser.set(user.user, user.connection_id);
+  if (connectedUser.length !== 0) {
+    user = {
+      "user": `User_${parseInt(connectedUser[connectedUser.length - 1].user.split("_")[1]) + 1}`,
+      "connection_id": socket.id
+    };
+  } else {
+    user = {
+      "user": `User_0`,
+      "connection_id": socket.id
+    };
+  }
+  connectedUser.push(user);
 
+  hashMap.set(socket.id, user.user);
+  hashMapUser.set(user.user, user.connection_id);
   socket.emit('emitUser', {
     id: user
   });
@@ -116,8 +124,10 @@ io.on("connection", (socket) => {
     //   (peerSocketId) => peerSocketId !== socket.id
     // );
     // connectedPeers = newConnectedPeers;
+    const userDelete = hashMap.get(socket.id);
     hashMap.delete(socket.id);
-
+    connectedUser = connectedUser.filter((user) => user.user !== userDelete);
+    console.log(connectedUser);
   });
 });
 
