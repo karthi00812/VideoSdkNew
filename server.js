@@ -50,11 +50,6 @@ io.on("connection", (socket) => {
 
   socket.on("pre-offer", (data) => {
     const { calleePersonalCode, callType } = data;
-    console.log(data);
-    // const connectedPeer = connectedPeers.find(
-    //   (peerSocketId) => peerSocketId === calleePersonalCode
-    // );
-
     const connectedPeer = hashMapUser.has(calleePersonalCode) ? hashMapUser.get(calleePersonalCode) : "";
     if (connectedPeer) {
       const data = {
@@ -77,7 +72,6 @@ io.on("connection", (socket) => {
     //   (peerSocketId) => peerSocketId === callerSocketId
     // );
     const connectedPeer = hashMap.has(callerSocketId);
-    console.log("pre-offer-answer", data);
     if (connectedPeer) {
       io.to(data.callerSocketId).emit("pre-offer-answer", data);
     }
@@ -93,23 +87,14 @@ io.on("connection", (socket) => {
       connectedUserSocketIdl = connectedUserSocketId;
     }
 
-    console.log("webrtc" + connectedUserSocketIdl, data.connectedUserSocketId);
-    // const connectedPeer = connectedPeers.find(
-    //   (peerSocketId) => peerSocketId === connectedUserSocketId
-    // );
 
     if (connectedUserSocketIdl) {
-      console.log("webrtcIN" + connectedUserSocketIdl, data.connectedUserSocketId);
       io.to(connectedUserSocketIdl).emit("webRTC-signaling", data);
     }
   });
 
   socket.on("user-hanged-up", (data) => {
     const { connectedUserSocketId } = data;
-
-    // const connectedPeer = connectedPeers.find(
-    //   (peerSocketId) => peerSocketId === connectedUserSocketId
-    // );
 
     const connectedPeer = hashMap.has(connectedUserSocketId);
 
@@ -120,14 +105,9 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
 
-    // const newConnectedPeers = connectedPeers.filter(
-    //   (peerSocketId) => peerSocketId !== socket.id
-    // );
-    // connectedPeers = newConnectedPeers;
     const userDelete = hashMap.get(socket.id);
     hashMap.delete(socket.id);
     connectedUser = connectedUser.filter((user) => user.user !== userDelete);
-    console.log(connectedUser);
   });
 });
 
