@@ -298,6 +298,7 @@ const closePeerConnectionAndResetState = () => {
   if (peerConection) {
     peerConection.close();
     peerConection = null;
+    window.location.href="/userDisconnected";
   }
 
   // active mic and camera
@@ -309,7 +310,7 @@ const closePeerConnectionAndResetState = () => {
     store.getState().localStream.getAudioTracks()[0].enabled = true;
   }
 
-  ui.updateUIAfterHangUp(connectedUserDetails.callType);
+  
   setIncomingCallsAvailable();
   connectedUserDetails = null;
 };

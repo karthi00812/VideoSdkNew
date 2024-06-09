@@ -8,11 +8,6 @@ let socketIO = null;
 export const registerSocketEvents = (socket) => {
   socketIO = socket;
 
-  // socket.on("connect", () => {
-  //   store.setSocketId(socket.id);
-  //   ui.updatePersonalCode(socket.id);
-  // });
-
   socket.on("emitUser", (msg) => {
     console.log(msg);
     store.setSocketId(msg.id.connection_id, msg.id.user);
@@ -29,6 +24,11 @@ export const registerSocketEvents = (socket) => {
 
   socket.on("user-hanged-up", () => {
     webRTCHandler.handleConnectedUserHangedUp();
+  });
+
+  socket.on("redirectHomePage", () => {
+
+    window.location.href = "/userDisconnected";
   });
 
   socket.on("webRTC-signaling", (data) => {
