@@ -17,6 +17,10 @@ app.get("/customer", (req, res) => {
   res.sendFile(__dirname + "/public/customer.html");
 });
 
+app.get("/userDisconnected", (req, res) => {
+  res.sendFile(__dirname + "/public/userDisconnected.html");
+});
+
 app.get("/agent", (req, res) => {
   res.sendFile(__dirname + "/public/agent.html");
 });
@@ -67,10 +71,6 @@ io.on("connection", (socket) => {
 
   socket.on("pre-offer-answer", (data) => {
     const { callerSocketId } = data;
-
-    // const connectedPeer = connectedPeers.find(
-    //   (peerSocketId) => peerSocketId === callerSocketId
-    // );
     const connectedPeer = hashMap.has(callerSocketId);
     if (connectedPeer) {
       io.to(data.callerSocketId).emit("pre-offer-answer", data);
@@ -94,13 +94,25 @@ io.on("connection", (socket) => {
   });
 
   socket.on("user-hanged-up", (data) => {
-    const { connectedUserSocketId } = data;
 
-    const connectedPeer = hashMap.has(connectedUserSocketId);
+    let connectedUserSocketId = data.connectedUserSocketId;
+    let connectedUserSocketIdl;
 
-    if (connectedPeer) {
-      io.to(connectedUserSocketId).emit("user-hanged-up");
+    let userDelete = hashMap.get(socket.id);
+    hashMap.delete(socket.id);
+    connectedUser = connectedUser.filter((user) => user.user !== userDelete);
+
+    if (!hashMap.has(connectedUserSocketId)) {
+      connectedUserSocketIdl = hashMapUser.has(connectedUserSocketId) ? hashMapUser.get(connectedUserSocketId) : "";
+    } else {
+      connectedUserSocketIdl = connectedUserSocketId;
     }
+
+    userDelete = hashMap.get(connectedUserSocketIdl);
+    hashMap.delete(connectedUserSocketIdl);
+    connectedUser = connectedUser.filter((user) => user.user !== userDelete);
+    console.log(connectedUser);
+    io.to(connectedUserSocketIdl).emit("redirectHomePage", data);
   });
 
   socket.on("disconnect", () => {
