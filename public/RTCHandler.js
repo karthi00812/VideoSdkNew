@@ -176,18 +176,15 @@ export const handlePreOffer = (data) => {
   ) {
     createPeerConnection();
     sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);
-    // ui.showCallElements(connectedUserDetails.callType);
   }
 };
 
 const acceptCallHandler = () => {
   createPeerConnection();
   sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);
-  // ui.showCallElements(connectedUserDetails.callType);
 };
 
 const rejectCallHandler = () => {
-  sendPreOfferAnswer();
   setIncomingCallsAvailable();
   sendPreOfferAnswer(constants.preOfferAnswer.CALL_REJECTED);
 };
@@ -237,7 +234,6 @@ export const handlePreOfferAnswer = (data) => {
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALL_ACCEPTED) {
-    // ui.showCallElements(connectedUserDetails.callType);
     createPeerConnection();
     sendWebRTCOffer();
   }

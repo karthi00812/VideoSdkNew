@@ -53,8 +53,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("pre-offer", (data) => {
+
     const { calleePersonalCode, callType } = data;
     const connectedPeer = hashMapUser.has(calleePersonalCode) ? hashMapUser.get(calleePersonalCode) : "";
+    console.log(connectedPeer);
     if (connectedPeer) {
       const data = {
         callerSocketId: socket.id,
@@ -118,6 +120,7 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
 
     const userDelete = hashMap.get(socket.id);
+    hashMapUser.delete(userDelete);
     hashMap.delete(socket.id);
     connectedUser = connectedUser.filter((user) => user.user !== userDelete);
   });

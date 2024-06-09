@@ -88,7 +88,7 @@ export const showIncomingCallDialog = (
           }).then((result) => {
             if (result.isConfirmed) {
                 acceptCallHandler();
-            } else if (result.isDenied) {
+            } else if (result.isDismissed) {
                 rejectCallHandler();
             }
           });
