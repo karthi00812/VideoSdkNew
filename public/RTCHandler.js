@@ -14,30 +14,54 @@ const defaultConstraints = {
 
 const configuration = {
   iceServers: [
+
     {
-      urls: "stun:stun.relay.metered.ca:80",
+
+      urls: "stun:stun.l.google.com:13902",
+
     },
+
     {
+
       urls: "turn:global.relay.metered.ca:80",
-      username: "7a217b66c4ca7b4ab7a657c9",
-      credential: "pLtb6H8lNQvUvnmy",
+
+      username: "001eacc15cff715133bd975e",
+
+      credential: "dFEvwKHY4yrDvh7B",
+
     },
+
     {
+
       urls: "turn:global.relay.metered.ca:80?transport=tcp",
-      username: "7a217b66c4ca7b4ab7a657c9",
-      credential: "pLtb6H8lNQvUvnmy",
+
+      username: "001eacc15cff715133bd975e",
+
+      credential: "dFEvwKHY4yrDvh7B",
+
     },
+
     {
+
       urls: "turn:global.relay.metered.ca:443",
-      username: "7a217b66c4ca7b4ab7a657c9",
-      credential: "pLtb6H8lNQvUvnmy",
+
+      username: "001eacc15cff715133bd975e",
+
+      credential: "dFEvwKHY4yrDvh7B",
+
     },
+
     {
+
       urls: "turns:global.relay.metered.ca:443?transport=tcp",
-      username: "7a217b66c4ca7b4ab7a657c9",
-      credential: "pLtb6H8lNQvUvnmy",
+
+      username: "001eacc15cff715133bd975e",
+
+      credential: "dFEvwKHY4yrDvh7B",
+
     },
-  ],
+
+  ]
 };
 
 export const getLocalPreview = () => {
@@ -294,7 +318,7 @@ const closePeerConnectionAndResetState = () => {
   if (peerConection) {
     peerConection.close();
     peerConection = null;
-    window.location.href="/userDisconnected";
+    window.location.href = "/userDisconnected";
   }
 
   // active mic and camera
@@ -306,7 +330,7 @@ const closePeerConnectionAndResetState = () => {
     store.getState().localStream.getAudioTracks()[0].enabled = true;
   }
 
-  
+
   setIncomingCallsAvailable();
   connectedUserDetails = null;
 };
