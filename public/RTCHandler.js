@@ -14,53 +14,29 @@ const defaultConstraints = {
 
 const configuration = {
   iceServers: [
-
-    {
-
-      urls: "stun:stun.l.google.com:13902",
-
-    },
-
-    {
-
-      urls: "turn:global.relay.metered.ca:80",
-
-      username: "001eacc15cff715133bd975e",
-
-      credential: "dFEvwKHY4yrDvh7B",
-
-    },
-
-    {
-
-      urls: "turn:global.relay.metered.ca:80?transport=tcp",
-
-      username: "001eacc15cff715133bd975e",
-
-      credential: "dFEvwKHY4yrDvh7B",
-
-    },
-
-    {
-
-      urls: "turn:global.relay.metered.ca:443",
-
-      username: "001eacc15cff715133bd975e",
-
-      credential: "dFEvwKHY4yrDvh7B",
-
-    },
-
-    {
-
-      urls: "turns:global.relay.metered.ca:443?transport=tcp",
-
-      username: "001eacc15cff715133bd975e",
-
-      credential: "dFEvwKHY4yrDvh7B",
-
-    },
-
+      {
+        urls: "stun:stun.relay.metered.ca:80",
+      },
+      {
+        urls: "turn:global.relay.metered.ca:80",
+        username: "84778759785a5fa5316d6641",
+        credential: "7ohbx8OAGaAJxS9b",
+      },
+      {
+        urls: "turn:global.relay.metered.ca:80?transport=tcp",
+        username: "84778759785a5fa5316d6641",
+        credential: "7ohbx8OAGaAJxS9b",
+      },
+      {
+        urls: "turn:global.relay.metered.ca:443",
+        username: "84778759785a5fa5316d6641",
+        credential: "7ohbx8OAGaAJxS9b",
+      },
+      {
+        urls: "turns:global.relay.metered.ca:443?transport=tcp",
+        username: "84778759785a5fa5316d6641",
+        credential: "7ohbx8OAGaAJxS9b",
+      },
   ]
 };
 
