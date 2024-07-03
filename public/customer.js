@@ -7,23 +7,23 @@ const socket = io("/");
 webRTCHandler.getLocalPreview();
 socketCon.registerSocketEvents(socket);
 
-const personalCodeChatButton = document.getElementById(
-  "join"
-);
+// const personalCodeChatButton = document.getElementById(
+//   "join"
+// );
 
 let URLParams = new URLSearchParams(window.location.search);
 if (URLParams.get("user")) {
   const callType = constants.callType.VIDEO_PERSONAL_CODE;
   webRTCHandler.sendPreOffer(callType, URLParams.get("user"));
 }
-personalCodeChatButton.addEventListener("click", () => {
-  const calleePersonalCode = document.getElementById(
-    "personal_code_input"
-  ).value;
-  const callType = constants.callType.VIDEO_PERSONAL_CODE;
+// personalCodeChatButton.addEventListener("click", () => {
+//   const calleePersonalCode = document.getElementById(
+//     "personal_code_input"
+//   ).value;
+//   const callType = constants.callType.VIDEO_PERSONAL_CODE;
 
-  webRTCHandler.sendPreOffer(callType, calleePersonalCode);
-});
+//   webRTCHandler.sendPreOffer(callType, calleePersonalCode);
+// });
 
 const micButton = document.getElementById("mic_button");
 micButton.addEventListener("click", () => {

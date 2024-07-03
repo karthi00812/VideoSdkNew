@@ -31,6 +31,7 @@ body {
   padding: 0;
   color: white;
   font-family: "Montserrat", sans-serif;
+  overflow: hidden;
 }
 
 .main_container {
@@ -294,7 +295,8 @@ body {
   height: calc(100% - 70px);
   margin: 30px 40px 40px 40px;
   border-radius: 15px;
-  background: linear-gradient(168.68deg, #0052c9 1.12%, #0a91db 100%);
+  background: linear-gradient(168.68deg, #000000 1.12%, #494a4b 100%);
+  /* background: linear-gradient(168.68deg, #0052c9 1.12%, #0a91db 100%); */
   /* background-image: url('../utils/images/logo.png'); */
 }
 
@@ -308,14 +310,15 @@ body {
 
 .local_video_container {
   position: absolute;
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   border: 4px solid rgba(255, 255, 255, 0.5);
   border-radius: 15px;
   /* background: rgba(196, 196, 196, 0.2); */
   background: #020202b5;
-  top: 15px;
-  left: 15px;
+  /* top: 15px;
+  left: 15px; */
+  bottom: 1px;
 }
 
 .local_video {
@@ -493,14 +496,17 @@ body {
 
   .main_container {
     display: block;
+    height: 85vh;
   }
 
   .call_container {
     width: 100%;
+    height: 100%;
   }
 
   .videos_container {
     margin: 0.5rem;
+    
   }
 
   .remote_video {
