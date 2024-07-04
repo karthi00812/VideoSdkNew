@@ -39,12 +39,12 @@ io.on("connection", (socket) => {
 
   if (connectedUser.length !== 0) {
     user = {
-      "user": `User_${parseInt(connectedUser[connectedUser.length - 1].user.split("_")[1]) + 1}`,
+      "user": `user_${parseInt(connectedUser[connectedUser.length - 1].user.split("_")[1]) + 1}`,
       "connection_id": socket.id
     };
   } else {
     user = {
-      "user": `User_0`,
+      "user": `user_0`,
       "connection_id": socket.id
     };
   }
