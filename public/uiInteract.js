@@ -25,10 +25,11 @@ const showElement = (element) => {
 
 
 export const updatePersonalCode = (personalCode) => {
-    const personal = document.getElementById(
-        "pc1"
-    );
-    personal.textContent =  personalCode;
+    // const personal = document.getElementById(
+    //     "pc1"
+    // );
+    // personal.textContent =  personalCode;
+    console.log(personalCode);
 };
 
 export const showCallingDialog = (rejectCallHandler) => {
