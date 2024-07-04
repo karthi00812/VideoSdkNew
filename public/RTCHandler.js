@@ -9,34 +9,37 @@ let dataChannel;
 
 const defaultConstraints = {
   audio: true,
-  video: true,
+  // video: true,
+  video: {
+    facingMode: { exact: "user" }
+  }
 };
 
 const configuration = {
   iceServers: [
-      {
-        urls: "stun:stun.relay.metered.ca:80",
-      },
-      {
-        urls: "turn:global.relay.metered.ca:80",
-        username: "84778759785a5fa5316d6641",
-        credential: "7ohbx8OAGaAJxS9b",
-      },
-      {
-        urls: "turn:global.relay.metered.ca:80?transport=tcp",
-        username: "84778759785a5fa5316d6641",
-        credential: "7ohbx8OAGaAJxS9b",
-      },
-      {
-        urls: "turn:global.relay.metered.ca:443",
-        username: "84778759785a5fa5316d6641",
-        credential: "7ohbx8OAGaAJxS9b",
-      },
-      {
-        urls: "turns:global.relay.metered.ca:443?transport=tcp",
-        username: "84778759785a5fa5316d6641",
-        credential: "7ohbx8OAGaAJxS9b",
-      },
+    {
+      urls: "stun:stun.relay.metered.ca:80",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:80",
+      username: "84778759785a5fa5316d6641",
+      credential: "7ohbx8OAGaAJxS9b",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:80?transport=tcp",
+      username: "84778759785a5fa5316d6641",
+      credential: "7ohbx8OAGaAJxS9b",
+    },
+    {
+      urls: "turn:global.relay.metered.ca:443",
+      username: "84778759785a5fa5316d6641",
+      credential: "7ohbx8OAGaAJxS9b",
+    },
+    {
+      urls: "turns:global.relay.metered.ca:443?transport=tcp",
+      username: "84778759785a5fa5316d6641",
+      credential: "7ohbx8OAGaAJxS9b",
+    },
   ]
 };
 
@@ -55,6 +58,10 @@ export const getLocalPreview = () => {
     });
 };
 
+export const switchCamera = () => {
+  defaultConstraints.video.facingMode.exact = "environment";
+  getLocalPreview();
+}
 const createPeerConnection = () => {
   peerConection = new RTCPeerConnection(configuration);
 

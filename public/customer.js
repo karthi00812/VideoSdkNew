@@ -48,3 +48,8 @@ hangUpButton.addEventListener("click", () => {
   webRTCHandler.handleHangUp();
 });
 
+// switchCamera
+const switchCamera = document.getElementById("screen_sharing_button");
+switchCamera.addEventListener("click", () => {
+  webRTCHandler.switchCamera();
+});

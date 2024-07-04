@@ -11,9 +11,13 @@ export const updateLocalVideo = (stream) => {
 };
 
 export const showVideoCallButtons = () => {
-    const personalCodeVideoButton = document.getElementById(
-        "call_buttons"
-    );
+    // const personalCodeVideoButton = document.getElementById(
+    //     "call_buttons"
+    // );
+    const videoButton = document.getElementById(
+      "hang_up_button"
+  );
+  videoButton.disabled=true;
     // showElement(personalCodeVideoButton);
 };
 
