@@ -25,6 +25,10 @@ app.get("/agent", (req, res) => {
   res.sendFile(__dirname + "/public/agent.html");
 });
 
+app.get("/connected_users", (req, res) => {
+  res.send({"connectedUsersList":connectedUser});
+});
+
 let connectedPeers = [];
 const hashMap = new Map();
 const hashMapUser = new Map();
