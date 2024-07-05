@@ -32,6 +32,7 @@ body {
   color: white;
   font-family: "Montserrat", sans-serif;
   overflow: hidden;
+  background: linear-gradient(168.68deg, #000000 1.12%, #494a4b 100%) !important;
 }
 
 .main_container {
@@ -292,7 +293,7 @@ body {
 
 .videos_container {
   position: relative;
-  height: calc(100% - 70px);
+  height: 100%;
   margin: 30px 40px 40px 40px;
   border-radius: 15px;
   background: linear-gradient(168.68deg, #000000 1.12%, #494a4b 100%);
@@ -497,7 +498,7 @@ body {
 
   .main_container {
     display: block;
-    height: 85vh;
+    height: calc(100vh - 6rem);
   }
 
   .call_buttons_container {
