@@ -161,7 +161,7 @@ export const sendPreOffer = (callType, calleePersonalCode) => {
 export const handlePreOffer = (data) => {
 
   console.log("handlePreOffer", data);
-  const { callType, callerSocketId } = data;
+  const { callType, callerSocketId,calleePersonalCode } = data;
 
   if (!checkCallPossibility()) {
     return sendPreOfferAnswer(
@@ -181,7 +181,7 @@ export const handlePreOffer = (data) => {
     callType === constants.callType.CHAT_PERSONAL_CODE ||
     callType === constants.callType.VIDEO_PERSONAL_CODE
   ) {
-    ui.showIncomingCallDialog(callType, acceptCallHandler, rejectCallHandler);
+    ui.showIncomingCallDialog(callType, acceptCallHandler.bind(this,calleePersonalCode), rejectCallHandler);
   }
 
   if (
@@ -192,8 +192,10 @@ export const handlePreOffer = (data) => {
   }
 };
 
-const acceptCallHandler = () => {
+const acceptCallHandler = (calleePersonalCode) => {
   createPeerConnection();
+  console.log(calleePersonalCode)
+  store.setRemoteUser(calleePersonalCode);
   sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);
 };
 

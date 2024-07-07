@@ -63,11 +63,11 @@ io.on("connection", (socket) => {
 
     const { calleePersonalCode, callType } = data;
     const connectedPeer = hashMapUser.has(calleePersonalCode) ? hashMapUser.get(calleePersonalCode) : "";
-    console.log(connectedPeer);
     if (connectedPeer) {
       const data = {
         callerSocketId: socket.id,
         callType,
+        calleePersonalCode:hashMap.get(socket.id)
       };
       io.to(connectedPeer).emit("pre-offer", data);
     } else {
@@ -120,20 +120,17 @@ io.on("connection", (socket) => {
     userDelete = hashMap.get(connectedUserSocketIdl);
     hashMap.delete(connectedUserSocketIdl);
     connectedUser = connectedUser.filter((user) => user.user !== userDelete);
-    console.log(connectedUser);
     io.to(connectedUserSocketIdl).emit("redirectHomePage", data);
   });
 
   socket.on("updateConnectionStatus", (data) => {
 
-    console.log("updateConnectionStatus", data);
     for (let index = 0; index < connectedUser.length; index++) {
       if (connectedUser[index].user === data.username) {
         connectedUser[index].connection_status = true;
         connectedUser[index].connected_user = data.remoteUser;
       }
     }
-    console.log("demo", connectedUser);
   });
 
   socket.on("disconnect", () => {
