@@ -63,3 +63,7 @@ export const sendDataUsingWebRTCSignaling = (data) => {
 export const sendUserHangedUp = (data) => {
   socketIO.emit("user-hanged-up", data);
 };
+
+export const sendConnectionStatus = (data) => {
+  socketIO.emit("updateConnectionStatus",data);
+};

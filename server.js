@@ -26,7 +26,7 @@ app.get("/agent", (req, res) => {
 });
 
 app.get("/connected_users", (req, res) => {
-  res.send({"connectedUsersList":connectedUser});
+  res.send({ "connectedUsersList": connectedUser });
 });
 
 let connectedPeers = [];
@@ -34,18 +34,21 @@ const hashMap = new Map();
 const hashMapUser = new Map();
 
 let user = "", connectedUser = [];
-
 io.on("connection", (socket) => {
 
   if (connectedUser.length !== 0) {
     user = {
       "user": `user_${parseInt(connectedUser[connectedUser.length - 1].user.split("_")[1]) + 1}`,
-      "connection_id": socket.id
+      "connection_id": socket.id,
+      "connection_status": false,
+      "connected_user": null,
     };
   } else {
     user = {
       "user": `user_0`,
-      "connection_id": socket.id
+      "connection_id": socket.id,
+      "connection_status": false,
+      "connected_user": null,
     };
   }
   connectedUser.push(user);
@@ -119,6 +122,18 @@ io.on("connection", (socket) => {
     connectedUser = connectedUser.filter((user) => user.user !== userDelete);
     console.log(connectedUser);
     io.to(connectedUserSocketIdl).emit("redirectHomePage", data);
+  });
+
+  socket.on("updateConnectionStatus", (data) => {
+
+    console.log("updateConnectionStatus", data);
+    for (let index = 0; index < connectedUser.length; index++) {
+      if (connectedUser[index].user === data.username) {
+        connectedUser[index].connection_status = true;
+        connectedUser[index].connected_user = data.remoteUser;
+      }
+    }
+    console.log("demo", connectedUser);
   });
 
   socket.on("disconnect", () => {

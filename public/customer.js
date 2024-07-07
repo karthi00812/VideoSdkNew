@@ -14,6 +14,7 @@ socketCon.registerSocketEvents(socket);
 let URLParams = new URLSearchParams(window.location.search);
 if (URLParams.get("user")) {
   const callType = constants.callType.VIDEO_PERSONAL_CODE;
+  store.setRemoteUser(URLParams.get("user"));
   webRTCHandler.sendPreOffer(callType, URLParams.get("user"));
 }
 // personalCodeChatButton.addEventListener("click", () => {

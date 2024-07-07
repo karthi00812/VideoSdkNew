@@ -93,6 +93,12 @@ const createPeerConnection = () => {
 
   peerConection.onconnectionstatechange = (event) => {
     if (peerConection.connectionState === "connected") {
+      let state = store.getState();
+      wss.sendConnectionStatus({
+        username: state.userName,
+        socketId: state.socketId,
+        remoteUser: state.remoteUser
+      });
     }
   };
 
