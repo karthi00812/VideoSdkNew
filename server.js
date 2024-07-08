@@ -26,7 +26,18 @@ app.get("/agent", (req, res) => {
 });
 
 app.get("/connected_users", (req, res) => {
-  res.send({ "connectedUsersList": connectedUser });
+  let dto = [];
+  connectedUser.forEach((connected_user) => {
+    let data = {
+      user_id: connected_user.user,
+      connection_id: connected_user.connection_id,
+      status: connected_user.connection_status,
+      connected_user: connected_user.connected_user,
+      connection_type: connected_user.connection_type
+    }
+    dto.push(data);
+  });
+  res.send({ "connectedUsersList": dto });
 });
 
 let connectedPeers = [];
