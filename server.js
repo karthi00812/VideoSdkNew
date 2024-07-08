@@ -36,12 +36,20 @@ const hashMapUser = new Map();
 let user = "", connectedUser = [];
 io.on("connection", (socket) => {
 
+  let connection_type = socket.handshake.headers.referer;
+
+  if (connection_type.includes("customer")) {
+    connection_type = "customer";
+  } else {
+    connection_type = "agent";
+  }
   if (connectedUser.length !== 0) {
     user = {
       "user": `user_${parseInt(connectedUser[connectedUser.length - 1].user.split("_")[1]) + 1}`,
       "connection_id": socket.id,
       "connection_status": false,
       "connected_user": null,
+      "connection_type": connection_type
     };
   } else {
     user = {
@@ -49,6 +57,7 @@ io.on("connection", (socket) => {
       "connection_id": socket.id,
       "connection_status": false,
       "connected_user": null,
+      "connection_type": connection_type
     };
   }
   connectedUser.push(user);
@@ -67,7 +76,7 @@ io.on("connection", (socket) => {
       const data = {
         callerSocketId: socket.id,
         callType,
-        calleePersonalCode:hashMap.get(socket.id)
+        calleePersonalCode: hashMap.get(socket.id)
       };
       io.to(connectedPeer).emit("pre-offer", data);
     } else {
