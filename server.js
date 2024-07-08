@@ -47,7 +47,7 @@ io.on("connection", (socket) => {
     user = {
       "user": `user_${parseInt(connectedUser[connectedUser.length - 1].user.split("_")[1]) + 1}`,
       "connection_id": socket.id,
-      "connection_status": false,
+      "connection_status": 0,
       "connected_user": null,
       "connection_type": connection_type
     };
@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
     user = {
       "user": `user_0`,
       "connection_id": socket.id,
-      "connection_status": false,
+      "connection_status": 0,
       "connected_user": null,
       "connection_type": connection_type
     };
@@ -136,7 +136,7 @@ io.on("connection", (socket) => {
 
     for (let index = 0; index < connectedUser.length; index++) {
       if (connectedUser[index].user === data.username) {
-        connectedUser[index].connection_status = true;
+        connectedUser[index].connection_status = 1;
         connectedUser[index].connected_user = data.remoteUser;
       }
     }
