@@ -23,3 +23,42 @@ export const callState = {
   CALL_UNAVAILABLE: "CALL_UNAVAILABLE",
   CALL_AVAILABLE_ONLY_CHAT: "CALL_AVAILABLE_ONLY_CHAT",
 };
+
+
+let myPeerConnectionMetered = { iceServers: [{ urls: "stun:stun.relay.metered.ca:80", }, { urls: "turn:global.relay.metered.ca:80", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", }, { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", }, { urls: "turn:global.relay.metered.ca:443", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", }, { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", },], };
+
+let myPeerConnectionMetered2 = {
+    iceServers: [
+        {
+            urls: "stun:stun.relay.metered.ca:80",
+        },
+        {
+            urls: "turn:global.relay.metered.ca:80",
+            username: "84778759785a5fa5316d6641",
+            credential: "7ohbx8OAGaAJxS9b",
+        },
+        {
+            urls: "turn:global.relay.metered.ca:80?transport=tcp",
+            username: "84778759785a5fa5316d6641",
+            credential: "7ohbx8OAGaAJxS9b",
+        },
+        {
+            urls: "turn:global.relay.metered.ca:443",
+            username: "84778759785a5fa5316d6641",
+            credential: "7ohbx8OAGaAJxS9b",
+        },
+        {
+            urls: "turns:global.relay.metered.ca:443?transport=tcp",
+            username: "84778759785a5fa5316d6641",
+            credential: "7ohbx8OAGaAJxS9b",
+        },
+    ]
+};
+
+export const getTurnCred = () => {
+    return myPeerConnectionMetered;
+}
+
+export const getTurnCred2 = () => {
+    return myPeerConnectionMetered2;
+}

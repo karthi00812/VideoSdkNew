@@ -15,33 +15,7 @@ const defaultConstraints = {
   }
 };
 
-const configuration = {
-  iceServers: [
-    {
-      urls: "stun:stun.relay.metered.ca:80",
-    },
-    {
-      urls: "turn:global.relay.metered.ca:80",
-      username: "84778759785a5fa5316d6641",
-      credential: "7ohbx8OAGaAJxS9b",
-    },
-    {
-      urls: "turn:global.relay.metered.ca:80?transport=tcp",
-      username: "84778759785a5fa5316d6641",
-      credential: "7ohbx8OAGaAJxS9b",
-    },
-    {
-      urls: "turn:global.relay.metered.ca:443",
-      username: "84778759785a5fa5316d6641",
-      credential: "7ohbx8OAGaAJxS9b",
-    },
-    {
-      urls: "turns:global.relay.metered.ca:443?transport=tcp",
-      username: "84778759785a5fa5316d6641",
-      credential: "7ohbx8OAGaAJxS9b",
-    },
-  ]
-};
+const configuration = constants.getTurnCred();
 
 export const getLocalPreview = () => {
   navigator.mediaDevices
@@ -99,6 +73,12 @@ const createPeerConnection = () => {
         socketId: state.socketId,
         remoteUser: state.remoteUser
       });
+      try {
+        let hangup = document.getElementById("hang_up_button");
+        hangup.disabled = false;
+      } catch (ex) {
+        console.log(ex);
+      }
     }
   };
 
@@ -161,7 +141,7 @@ export const sendPreOffer = (callType, calleePersonalCode) => {
 export const handlePreOffer = (data) => {
 
   console.log("handlePreOffer", data);
-  const { callType, callerSocketId,calleePersonalCode } = data;
+  const { callType, callerSocketId, calleePersonalCode } = data;
 
   if (!checkCallPossibility()) {
     return sendPreOfferAnswer(
@@ -181,7 +161,7 @@ export const handlePreOffer = (data) => {
     callType === constants.callType.CHAT_PERSONAL_CODE ||
     callType === constants.callType.VIDEO_PERSONAL_CODE
   ) {
-    ui.showIncomingCallDialog(callType, acceptCallHandler.bind(this,calleePersonalCode), rejectCallHandler);
+    ui.showIncomingCallDialog(callType, acceptCallHandler.bind(this, calleePersonalCode), rejectCallHandler);
   }
 
   if (
