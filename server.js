@@ -28,10 +28,18 @@ app.get("/agent", (req, res) => {
 app.get("/connected_users", (req, res) => {
   let dto = [];
   connectedUser.forEach((connected_user) => {
+    let fst = "";
+    if (connected_user.connection_type === "customer") {
+      fst = "User";
+    } else {
+      fst = "Operator";
+    }
     let data = {
-      user_id: connected_user.user,
+      id: connected_user.user,
+      login_name: connected_user.user,
       connection_id: connected_user.connection_id,
-      status: connected_user.connection_status,
+      first_name: fst,
+      status: connected_user.connection_type === "customer" ? 0 : connected_user.connection_status,
       connected_user: connected_user.connected_user,
       connection_type: connected_user.connection_type
     }
@@ -58,7 +66,7 @@ io.on("connection", (socket) => {
     user = {
       "user": `user_${parseInt(connectedUser[connectedUser.length - 1].user.split("_")[1]) + 1}`,
       "connection_id": socket.id,
-      "connection_status": 0,
+      "connection_status": 1,
       "connected_user": null,
       "connection_type": connection_type
     };
@@ -66,7 +74,7 @@ io.on("connection", (socket) => {
     user = {
       "user": `user_0`,
       "connection_id": socket.id,
-      "connection_status": 0,
+      "connection_status": 1,
       "connected_user": null,
       "connection_type": connection_type
     };
@@ -147,7 +155,7 @@ io.on("connection", (socket) => {
 
     for (let index = 0; index < connectedUser.length; index++) {
       if (connectedUser[index].user === data.username) {
-        connectedUser[index].connection_status = 1;
+        connectedUser[index].connection_status = 2;
         connectedUser[index].connected_user = data.remoteUser;
       }
     }
