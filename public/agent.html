@@ -18,6 +18,7 @@
     <div class='main_container'>
         <div class='call_container'>
             <div class='videos_container'>
+                <div style="position: absolute;color: aliceblue;padding: 1rem;"><span id="user_id">#####</span></div>
                 <video class='remote_video' playsinline autoplay id='remote_video'></video>
                 <div class='local_video_container'>
                     <video class='local_video' id='local_video' muted autoplay playsinline></video>
@@ -72,9 +73,6 @@
             </div> -->
         </div>
     </div>
-    <div style="
-    position: absolute;
-    top: 27px;">User_id:-- <span id="user_id">#####</span></div>
 
     <script src='/socket.io/socket.io.js'></script>
     <script src="./RTCHandler.js" type='module'></script>
