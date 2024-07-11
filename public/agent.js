@@ -57,4 +57,3 @@ const hangUpButton = document.getElementById("hang_up_button");
 hangUpButton.addEventListener("click", () => {
   webRTCHandler.handleHangUp();
 });
-
