@@ -45,7 +45,7 @@ app.get("/connected_users", (req, res) => {
     }
     dto.push(data);
   });
-  res.send({ "connectedUsersList": dto });
+  res.send({ "users": dto });
 });
 
 let connectedPeers = [];
