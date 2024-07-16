@@ -1,4 +1,4 @@
-import * as wss from "./wss.js";
+import * as wss from "./wssAgent.js";
 import * as constants from "./constants.js";
 import * as store from "./store.js";
 import * as ui from "./uiInteract.js"
@@ -39,16 +39,20 @@ export const switchCamera = () => {
 const createPeerConnection = () => {
   peerConection = new RTCPeerConnection(configuration);
 
-  dataChannel = peerConection.createDataChannel("chat");
+  // dataChannel = peerConection.createDataChannel("chat");
 
-  dataChannel.onopen = (event) => {
-    console.log("HELLLLLL");
-      console.log("Data channel ready to receive data");
-      dataChannel.send(JSON.stringify({ "id": "iop" }));
-  };
+  peerConection.ondatachannel = (event) => {
+    const data = event.channel;
+    console.log("HELO");
+    data.onopen = () => {
+      console.log("peer connection is ready to receive data channel messages");
+    };
 
-  dataChannel.onclose = (event) => {
-    console.log("Data channel closed by remote user");
+    data.onmessage = (event) => {
+      const message = JSON.parse(event.data);
+      console.log(message);
+      window.parent.postMessage(message,'*');
+    };
   };
 
 
