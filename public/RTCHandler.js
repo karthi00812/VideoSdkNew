@@ -42,9 +42,8 @@ const createPeerConnection = () => {
   dataChannel = peerConection.createDataChannel("chat");
 
   dataChannel.onopen = (event) => {
-    console.log("HELLLLLL");
       console.log("Data channel ready to receive data");
-      dataChannel.send(JSON.stringify({ "id": "iop" }));
+      dataChannel.send(JSON.stringify({ "id": "ekyc","Data":"Data comes here" }));
   };
 
   dataChannel.onclose = (event) => {

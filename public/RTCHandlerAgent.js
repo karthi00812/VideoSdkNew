@@ -43,7 +43,6 @@ const createPeerConnection = () => {
 
   peerConection.ondatachannel = (event) => {
     const data = event.channel;
-    console.log("HELO");
     data.onopen = () => {
       console.log("peer connection is ready to receive data channel messages");
     };
