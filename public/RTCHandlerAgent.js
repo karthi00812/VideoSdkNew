@@ -9,7 +9,6 @@ let dataChannel;
 
 const defaultConstraints = {
   audio: true,
-  // video: true,
   video: {
     facingMode: { exact: "user" }
   }

@@ -11,6 +11,10 @@ let state = {
   userName: null,
   remoteUser: null
 };
+let mediaDevices = [];
+let videoDevices = [];
+let audioDevices = [];
+let selectedDevices = { audio: "", video: "" };
 
 export const setSocketId = (socketId, userName) => {
   state = {
@@ -25,6 +29,19 @@ export const setLocalStream = (stream) => {
     ...state,
     localStream: stream,
   };
+  let selectedVideo = {
+    dataset: {
+      deviceid: stream.getVideoTracks()[0].getSettings().deviceId
+    }
+  }
+
+  let selectAudio = {
+    dataset: {
+      deviceid: stream.getAudioTracks()[0].getSettings().deviceId
+    }
+  }
+  selectedDevices.video = selectedVideo;
+  selectedDevices.audio = selectAudio;
 };
 
 export const setAllowConnectionsFromStrangers = (allowConnection) => {
@@ -69,3 +86,31 @@ export const getState = () => {
 export const setRemoteUser = (remoteUser) => {
   state.remoteUser = remoteUser;
 };
+
+const setMediaDevices = async () => {
+  if (mediaDevices.length == 0) {
+    mediaDevices = await navigator.mediaDevices.enumerateDevices();
+  }
+  videoDevices = mediaDevices.filter((device) => { return device.kind === "videoinput" });
+  audioDevices = mediaDevices.filter((device) => { return device.kind === "audioinput" });
+}
+export const getVideoDevices = () => {
+  return videoDevices;
+};
+
+export const getAudioDevices = () => {
+  return audioDevices;
+}
+
+export const setSelectedDevice = (devices) => {
+  selectedDevices = {
+    ...selectedDevices,
+    ...devices
+  };
+}
+
+export const getSelectedDevices = () => {
+  return selectedDevices;
+}
+
+setMediaDevices();

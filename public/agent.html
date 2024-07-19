@@ -18,6 +18,16 @@
     <div class='main_container'>
         <div class='call_container'>
             <div class='videos_container'>
+                <div class="dropdown" style="position: absolute;right: 0rem;margin: 0.5rem;z-index: 1;">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                      MediaDevices
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <li><a class="dropdown-item" data-deviceId="">Device Name</a></li>
+                      <li><hr class="dropdown-divider"></li>
+                    </ul>
+                  </div>
+
                 <div style="position: absolute;color: aliceblue;padding: 1rem;"><span id="user_id">#####</span></div>
                 <video class='remote_video' playsinline autoplay id='remote_video'></video>
                 <div class='local_video_container'>
@@ -45,9 +55,6 @@
                 </button>
                 <button class='call_button_large' id='hang_up_button'>
                     <img src='/images/hangUp.png'></img>
-                </button>
-                <button class='call_button_small' id='screen_sharing_button'>
-                    <img src='/images/switchCameraScreenSharing.png'></img>
                 </button>
                 <button class='call_button_small' id='start_recording_button'>
                     <img src='/images/recordingStart.png'></img>

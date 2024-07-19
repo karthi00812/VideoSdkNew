@@ -56,3 +56,72 @@ const hangUpButton = document.getElementById("hang_up_button");
 hangUpButton.addEventListener("click", () => {
   webRTCHandler.handleHangUp();
 });
+
+const changeCamer = document.querySelector(".dropdown-item");
+changeCamer.addEventListener("click", () => {
+  console.log(store.getVideoDevices());
+});
+
+let dropDown = document.querySelector(".dropdown");
+let dropDownMenu = document.querySelector(".dropdown-menu");
+let dropdownItem = document.querySelector(".dropdown-item");
+let divider = document.querySelector(".dropdown-divider");
+
+let previousSelectedVideo = "", previousSelectedAudio = "";
+
+dropDown.addEventListener("click", () => {
+  dropDownMenu.innerHTML = "";
+  let selectD = store.getSelectedDevices()
+  store.getVideoDevices().forEach((item) => {
+    let cloneItem = dropdownItem.cloneNode(true);
+    cloneItem.dataset.deviceid = item.deviceId;
+    cloneItem.textContent = item.label;
+    cloneItem.onclick = selectDeviceVideo;
+    if (selectD && selectD.video && selectD.video.dataset.deviceid === item.deviceId) {
+      cloneItem.style.color = "#1e2125";
+      cloneItem.style.backgroundColor = "#e9ecef";
+      previousSelectedVideo = cloneItem;
+    }
+    dropDownMenu.appendChild(cloneItem);
+  });
+
+  dropDownMenu.appendChild(divider);
+
+  store.getAudioDevices().forEach((item) => {
+    let cloneItem = dropdownItem.cloneNode(true);
+    cloneItem.dataset.deviceid = item.deviceId;
+    cloneItem.textContent = item.label;
+    cloneItem.onclick = selectDeviceAudio;
+    if (selectD && selectD.audio && selectD.audio.dataset.deviceid === item.deviceId) {
+      cloneItem.style.color = "#1e2125";
+      cloneItem.style.backgroundColor = "#e9ecef";
+      previousSelectedAudio = cloneItem;
+    }
+    dropDownMenu.appendChild(cloneItem);
+  });
+})
+
+function selectDeviceVideo(event) {
+  event.target.style.color = "#1e2125";
+  event.target.style.backgroundColor = "#e9ecef";
+  event.stopPropagation();
+  if (previousSelectedVideo) {
+    previousSelectedVideo.style.removeProperty("color");
+    previousSelectedVideo.style.removeProperty("background-color");
+  }
+  previousSelectedVideo = event.target;
+  store.setSelectedDevice({ video: event.target });
+  getLocalPreview();
+}
+
+function selectDeviceAudio(event) {
+  event.target.style.color = "#1e2125";
+  event.target.style.backgroundColor = "#e9ecef";
+  event.stopPropagation();
+  if (previousSelectedAudio) {
+    previousSelectedAudio.style.removeProperty("color");
+    previousSelectedAudio.style.removeProperty("background-color");
+  }
+  previousSelectedAudio = event.target;
+  store.setSelectedDevice({ audio: event.target });
+}
