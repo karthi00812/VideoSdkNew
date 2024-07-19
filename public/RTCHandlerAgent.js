@@ -9,9 +9,7 @@ let dataChannel;
 
 const defaultConstraints = {
   audio: true,
-  video: {
-    facingMode: { exact: "user" }
-  }
+  video: true
 };
 
 const configuration = constants.getTurnCred();
@@ -42,6 +40,7 @@ export const getLocalPreview = (constraints, trackStatus) => {
           store.getAudioTrackSender().replaceTrack(audioTrack);
         }
       }
+      store.setMediaDevices();
     })
     .catch((err) => {
       console.log("error occured when trying to get an access to camera");

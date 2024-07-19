@@ -88,12 +88,13 @@ export const setRemoteUser = (remoteUser) => {
   state.remoteUser = remoteUser;
 };
 
-const setMediaDevices = async () => {
+export const setMediaDevices = async () => {
   if (mediaDevices.length == 0) {
     mediaDevices = await navigator.mediaDevices.enumerateDevices();
   }
   videoDevices = mediaDevices.filter((device) => { return device.kind === "videoinput" });
   audioDevices = mediaDevices.filter((device) => { return device.kind === "audioinput" });
+  debugger;
 }
 export const getVideoDevices = () => {
   return videoDevices;
@@ -129,6 +130,3 @@ export const getVideoTrackSender = () => {
 export const getAudioTrackSender = () => {
   return selectedAudioTrackSender;
 }
-
-
-setMediaDevices();
