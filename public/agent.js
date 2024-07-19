@@ -105,23 +105,38 @@ function selectDeviceVideo(event) {
   event.target.style.color = "#1e2125";
   event.target.style.backgroundColor = "#e9ecef";
   event.stopPropagation();
-  if (previousSelectedVideo) {
+  if (previousSelectedVideo && previousSelectedVideo.dataset.deviceid !== event.target.dataset.deviceid) {
     previousSelectedVideo.style.removeProperty("color");
     previousSelectedVideo.style.removeProperty("background-color");
   }
   previousSelectedVideo = event.target;
   store.setSelectedDevice({ video: event.target });
-  getLocalPreview();
+  webRTCHandler.getLocalPreview({
+    audio: {
+      deviceId: store.getSelectedDevices().audio.dataset.deviceid
+    },
+    video: {
+      deviceId: event.target.dataset.deviceid
+    }
+  }, true);
 }
 
 function selectDeviceAudio(event) {
   event.target.style.color = "#1e2125";
   event.target.style.backgroundColor = "#e9ecef";
   event.stopPropagation();
-  if (previousSelectedAudio) {
+  if (previousSelectedAudio && previousSelectedAudio.dataset.deviceid !== event.target.dataset.deviceid) {
     previousSelectedAudio.style.removeProperty("color");
     previousSelectedAudio.style.removeProperty("background-color");
   }
   previousSelectedAudio = event.target;
   store.setSelectedDevice({ audio: event.target });
+  webRTCHandler.getLocalPreview({
+    audio: {
+      deviceId: event.target.dataset.deviceid
+    },
+    video: {
+      deviceId: store.getSelectedDevices().video.dataset.deviceid
+    }
+  }, true);
 }

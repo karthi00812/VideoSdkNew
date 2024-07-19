@@ -16,14 +16,32 @@ const defaultConstraints = {
 
 const configuration = constants.getTurnCred();
 
-export const getLocalPreview = () => {
+export const getLocalPreview = (constraints, trackStatus) => {
+  constraints = constraints || defaultConstraints;
   navigator.mediaDevices
-    .getUserMedia(defaultConstraints)
+    .getUserMedia(constraints)
     .then((stream) => {
       ui.updateLocalVideo(stream);
       ui.showVideoCallButtons();
       store.setCallState(constants.callState.CALL_AVAILABLE);
       store.setLocalStream(stream);
+      if (trackStatus === true) {
+        let videoTrack = "", audioTrack = "";
+        for (const track of stream.getTracks()) {
+          if (track.kind === "video") {
+            videoTrack = track;
+          }
+          if (track.kind === "audio") {
+            audioTrack = track;
+          }
+        }
+        if (store.getVideoTrackSender() && videoTrack) {
+          store.getVideoTrackSender().replaceTrack(videoTrack);
+        }
+        if (store.getAudioTrackSender() && audioTrack) {
+          store.getAudioTrackSender().replaceTrack(audioTrack);
+        }
+      }
     })
     .catch((err) => {
       console.log("error occured when trying to get an access to camera");
@@ -49,7 +67,7 @@ const createPeerConnection = () => {
     data.onmessage = (event) => {
       const message = JSON.parse(event.data);
       console.log(message);
-      window.parent.postMessage(message,'*');
+      window.parent.postMessage(message, '*');
     };
   };
 
@@ -96,7 +114,13 @@ const createPeerConnection = () => {
     const localStream = store.getState().localStream;
 
     for (const track of localStream.getTracks()) {
-      peerConection.addTrack(track, localStream);
+      let sender = peerConection.addTrack(track, localStream);
+      if (track.kind === "video") {
+        store.setVideoTrackSender(sender);
+      }
+      if (track.kind === "audio") {
+        store.setAudioTrackSender(sender);
+      }
     }
   }
 };

@@ -14,6 +14,7 @@ let state = {
 let mediaDevices = [];
 let videoDevices = [];
 let audioDevices = [];
+let selectedVideoTrackSender = "", selectedAudioTrackSender = "";
 let selectedDevices = { audio: "", video: "" };
 
 export const setSocketId = (socketId, userName) => {
@@ -112,5 +113,22 @@ export const setSelectedDevice = (devices) => {
 export const getSelectedDevices = () => {
   return selectedDevices;
 }
+
+export const setVideoTrackSender = (sender) => {
+  selectedVideoTrackSender = sender;
+}
+
+export const setAudioTrackSender = (sender) => {
+  selectedAudioTrackSender = sender;
+}
+
+export const getVideoTrackSender = () => {
+  return selectedVideoTrackSender;
+}
+
+export const getAudioTrackSender = () => {
+  return selectedAudioTrackSender;
+}
+
 
 setMediaDevices();
