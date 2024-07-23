@@ -83,7 +83,13 @@ const createPeerConnection = () => {
   };
 
   peerConection.onconnectionstatechange = (event) => {
-    if (peerConection.connectionState === "connected") {
+    console.log(peerConection.connectionState);
+    ui.updateStatus(peerConection.connectionState);
+    if (peerConection.connectionState === "disconnect" || peerConection.connectionState === "failed") {
+      closePeerConnectionAndResetState();
+      ui.updateStatus("disconnected");
+    }
+    if (peerConection && peerConection.connectionState === "connected") {
       let state = store.getState();
       wss.sendConnectionStatus({
         username: state.userName,
@@ -105,7 +111,6 @@ const createPeerConnection = () => {
   };
 
   // add our stream to peer connection
-
   if (
     connectedUserDetails.callType === constants.callType.VIDEO_PERSONAL_CODE ||
     connectedUserDetails.callType === constants.callType.VIDEO_STRANGER
@@ -311,8 +316,9 @@ export const handleConnectedUserHangedUp = () => {
 const closePeerConnectionAndResetState = () => {
   if (peerConection) {
     peerConection.close();
+    ui.updateStatus("disconnected");
     peerConection = null;
-    window.location.href = "/userDisconnected";
+    // window.location.href = "/userDisconnected";
   }
 
   // active mic and camera
@@ -323,8 +329,6 @@ const closePeerConnectionAndResetState = () => {
     store.getState().localStream.getVideoTracks()[0].enabled = true;
     store.getState().localStream.getAudioTracks()[0].enabled = true;
   }
-
-
   setIncomingCallsAvailable();
   connectedUserDetails = null;
 };

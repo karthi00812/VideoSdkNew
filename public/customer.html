@@ -11,13 +11,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
     <div class='main_container'>
         <div class='call_container'>
             <div class='videos_container'>
+                <div style="position: absolute;color: aliceblue;padding: 1rem;bottom: 0rem;right: 0rem;">Status: <span
+                        id="status">#####</span></div>
                 <video class='remote_video' autoplay playsinline id='remote_video'></video>
                 <div class='local_video_container'>
                     <video class='local_video' id='local_video' muted autoplay playsinline></video>
@@ -57,7 +59,7 @@
             </button>
         </div>
     </div>
-    
+
     <script src='/socket.io/socket.io.js'></script>
     <script src="./RTCHandler.js" type='module'></script>
     <script src="customer.js" type='module'></script>

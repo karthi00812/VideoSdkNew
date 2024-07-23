@@ -168,3 +168,11 @@ const hideElement = (element) => {
     element.classList.add("display_none");
   }
 };
+
+// update the status
+const status = document.querySelector("#status");
+status.textContent = "Not Connected";
+
+export const updateStatus = (statusContent) => {
+  status.textContent = statusContent;
+};

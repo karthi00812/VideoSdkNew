@@ -1,7 +1,7 @@
 import * as wss from "./wss.js";
 import * as constants from "./constants.js";
 import * as store from "./store.js";
-import * as ui from "./uiInteract.js"
+import * as ui from "./uiInteract.js";
 
 let connectedUserDetails;
 let peerConection;
@@ -42,8 +42,8 @@ const createPeerConnection = () => {
   dataChannel = peerConection.createDataChannel("chat");
 
   dataChannel.onopen = (event) => {
-      console.log("Data channel ready to receive data");
-      dataChannel.send(JSON.stringify({ "id": "ekyc","Data":"Data comes here" }));
+    console.log("Data channel ready to receive data");
+    dataChannel.send(JSON.stringify({ "id": "ekyc", "Data": "Data comes here" }));
   };
 
   dataChannel.onclose = (event) => {
@@ -63,7 +63,13 @@ const createPeerConnection = () => {
   };
 
   peerConection.onconnectionstatechange = (event) => {
-    if (peerConection.connectionState === "connected") {
+    console.log(peerConection.connectionState);
+    ui.updateStatus(peerConection.connectionState);
+    if(peerConection.connectionState==="disconnect" || peerConection.connectionState==="failed"){
+      closePeerConnectionAndResetState();
+      ui.updateStatus("disconnected");
+    }
+    if (peerConection && peerConection.connectionState === "connected") {
       let state = store.getState();
       wss.sendConnectionStatus({
         username: state.userName,
@@ -285,8 +291,8 @@ export const handleConnectedUserHangedUp = () => {
 const closePeerConnectionAndResetState = () => {
   if (peerConection) {
     peerConection.close();
+    ui.updateStatus("disconnect");
     peerConection = null;
-    window.location.href = "/userDisconnected";
   }
 
   // active mic and camera
