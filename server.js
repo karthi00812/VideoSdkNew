@@ -132,23 +132,29 @@ io.on("connection", (socket) => {
 
   socket.on("user-hanged-up", (data) => {
 
-    let connectedUserSocketId = data.connectedUserSocketId;
-    let connectedUserSocketIdl;
+    // let connectedUserSocketId = data.connectedUserSocketId;
+    // let connectedUserSocketIdl;
 
-    let userDelete = hashMap.get(socket.id);
-    hashMap.delete(socket.id);
-    connectedUser = connectedUser.filter((user) => user.user !== userDelete);
+    // let userDelete = hashMap.get(socket.id);
+    // hashMap.delete(socket.id);
+    // connectedUser = connectedUser.filter((user) => user.user !== userDelete);
 
-    if (!hashMap.has(connectedUserSocketId)) {
-      connectedUserSocketIdl = hashMapUser.has(connectedUserSocketId) ? hashMapUser.get(connectedUserSocketId) : "";
-    } else {
-      connectedUserSocketIdl = connectedUserSocketId;
+    // if (!hashMap.has(connectedUserSocketId)) {
+    //   connectedUserSocketIdl = hashMapUser.has(connectedUserSocketId) ? hashMapUser.get(connectedUserSocketId) : "";
+    // } else {
+    //   connectedUserSocketIdl = connectedUserSocketId;
+    // }
+
+    for (let index = 0; index < connectedUser.length; index++) {
+      if (connectedUser[index].connection_id === data.connectedUserSocketId) {
+        connectedUser[index].connection_status = 1;
+      }
     }
 
-    userDelete = hashMap.get(connectedUserSocketIdl);
-    hashMap.delete(connectedUserSocketIdl);
-    connectedUser = connectedUser.filter((user) => user.user !== userDelete);
-    io.to(connectedUserSocketIdl).emit("redirectHomePage", data);
+    // userDelete = hashMap.get(connectedUserSocketIdl);
+    // hashMap.delete(connectedUserSocketIdl);
+    // connectedUser = connectedUser.filter((user) => user.user !== userDelete);
+    // io.to(connectedUserSocketIdl).emit("redirectHomePage", data);
   });
 
   socket.on("updateConnectionStatus", (data) => {

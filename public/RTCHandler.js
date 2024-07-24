@@ -66,7 +66,7 @@ const createPeerConnection = () => {
     console.log(peerConection.connectionState);
     ui.updateStatus(peerConection.connectionState);
     if(peerConection.connectionState==="disconnect" || peerConection.connectionState==="failed"){
-      closePeerConnectionAndResetState();
+      callingDialogRejectCallHandler();
       ui.updateStatus("disconnected");
     }
     if (peerConection && peerConection.connectionState === "connected") {
