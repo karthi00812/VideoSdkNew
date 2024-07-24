@@ -30,7 +30,7 @@ let myPeerConnectionMetered = { iceServers: [{ urls: "stun:stun.relay.metered.ca
 let myPeerConnectionMetered2 = {
     iceServers: [
         {
-            urls: "stun:stun.relay.metered.ca:80",
+            urls: "stun:stun.relay.metered.ca:443",
         },
         {
             urls: "turn:global.relay.metered.ca:80",
