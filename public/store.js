@@ -1,4 +1,3 @@
-import { application } from "express";
 import * as constants from "./constants.js";
 
 let state = {
