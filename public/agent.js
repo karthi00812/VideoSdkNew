@@ -15,10 +15,6 @@ micButton.addEventListener("click", () => {
   ui.updateMicButton(micEnabled);
 });
 
-let URLParams = new URLSearchParams(window.location.search);
-if (URLParams.get("applicationid")) {
-  store.setApplicationId(URLParams.get("applicationid"));
-}
 
 const cameraButton = document.getElementById("camera_button");
 cameraButton.addEventListener("click", () => {

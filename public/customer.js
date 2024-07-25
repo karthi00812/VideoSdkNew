@@ -17,6 +17,11 @@ if (URLParams.get("user")) {
   store.setRemoteUser(URLParams.get("user"));
   webRTCHandler.sendPreOffer(callType, URLParams.get("user"));
 }
+
+if (URLParams.get("applicationid")) {
+  store.setApplicationId(URLParams.get("applicationid"));
+}
+
 // personalCodeChatButton.addEventListener("click", () => {
 //   const calleePersonalCode = document.getElementById(
 //     "personal_code_input"

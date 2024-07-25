@@ -95,7 +95,6 @@ export const setMediaDevices = async () => {
   }
   videoDevices = mediaDevices.filter((device) => { return device.kind === "videoinput" });
   audioDevices = mediaDevices.filter((device) => { return device.kind === "audioinput" });
-  debugger;
 }
 export const getVideoDevices = () => {
   return videoDevices;
@@ -133,7 +132,7 @@ export const getAudioTrackSender = () => {
 }
 
 export const setApplicationId = (application_id) => {
-  return state.applicationid=application_id;
+  state.applicationid=application_id;
 }
 
 export const getApplicationId = () => {
