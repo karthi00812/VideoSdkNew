@@ -1,3 +1,4 @@
+import { application } from "express";
 import * as constants from "./constants.js";
 
 let state = {
@@ -9,7 +10,8 @@ let state = {
   allowConnectionsFromStrangers: false,
   callState: constants.callState.CALL_AVAILABLE_ONLY_CHAT,
   userName: null,
-  remoteUser: null
+  remoteUser: null,
+  applicationid: null
 };
 let mediaDevices = [];
 let videoDevices = [];
@@ -129,4 +131,12 @@ export const getVideoTrackSender = () => {
 
 export const getAudioTrackSender = () => {
   return selectedAudioTrackSender;
+}
+
+export const setApplicationId = (application_id) => {
+  return state.applicationid=application_id;
+}
+
+export const getApplicationId = () => {
+  return state.applicationid;
 }
