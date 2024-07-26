@@ -43,7 +43,7 @@ const createPeerConnection = () => {
 
   dataChannel.onopen = (event) => {
     console.log("Data channel ready to receive data");
-    dataChannel.send(JSON.stringify({ "id": "ekyc", "Data": store.getApplicationId()}));
+    dataChannel.send(JSON.stringify({ "id": "ekyc", "Data": store.getApplicationId() }));
   };
 
   dataChannel.onclose = (event) => {
@@ -65,16 +65,23 @@ const createPeerConnection = () => {
   peerConection.onconnectionstatechange = (event) => {
     console.log(peerConection.connectionState);
     ui.updateStatus(peerConection.connectionState);
-    if(peerConection.connectionState==="disconnect" || peerConection.connectionState==="failed"){
+    let state = store.getState();
+    if (peerConection.connectionState === "disconnect" || peerConection.connectionState === "failed") {
       callingDialogRejectCallHandler();
       ui.updateStatus("disconnected");
-    }
-    if (peerConection && peerConection.connectionState === "connected") {
-      let state = store.getState();
       wss.sendConnectionStatus({
         username: state.userName,
         socketId: state.socketId,
-        remoteUser: state.remoteUser
+        remoteUser: "",
+        status: "disconnected"
+      });
+    }
+    if (peerConection && peerConection.connectionState === "connected") {
+      wss.sendConnectionStatus({
+        username: state.userName,
+        socketId: state.socketId,
+        remoteUser: state.remoteUser,
+        status: "connected"
       });
       try {
         let hangup = document.getElementById("hang_up_button");
@@ -293,6 +300,13 @@ const closePeerConnectionAndResetState = () => {
     peerConection.close();
     ui.updateStatus("disconnect");
     peerConection = null;
+    let state = store.getState();
+    wss.sendConnectionStatus({
+      username: state.userName,
+      socketId: state.socketId,
+      remoteUser: "",
+      status: "disconnected"
+    });
   }
 
   // active mic and camera

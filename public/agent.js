@@ -142,5 +142,5 @@ function selectDeviceAudio(event) {
   }, true);
 }
 
-const status=document.querySelector("#status");
-status.textContent="Not Connected";
+const status = document.querySelector("#status");
+status.textContent = "Not Connected";

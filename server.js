@@ -39,7 +39,8 @@ app.get("/connected_users", (req, res) => {
       login_name: connected_user.user,
       connection_id: connected_user.connection_id,
       first_name: fst,
-      status: connected_user.connection_type === "customer" ? 0 : connected_user.connection_status,
+      // status: connected_user.connection_type === "customer" ? 0 : connected_user.connection_status,
+      status: connected_user.connection_status,
       connected_user: connected_user.connected_user,
       connection_type: connected_user.connection_type
     }
@@ -159,9 +160,10 @@ io.on("connection", (socket) => {
 
   socket.on("updateConnectionStatus", (data) => {
 
+    console.log(data);
     for (let index = 0; index < connectedUser.length; index++) {
       if (connectedUser[index].user === data.username) {
-        connectedUser[index].connection_status = 2;
+        connectedUser[index].connection_status = (data.status === "connected" ? 2 : 1);
         connectedUser[index].connected_user = data.remoteUser;
       }
     }

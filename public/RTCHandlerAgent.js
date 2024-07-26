@@ -85,16 +85,23 @@ const createPeerConnection = () => {
   peerConection.onconnectionstatechange = (event) => {
     console.log(peerConection.connectionState);
     ui.updateStatus(peerConection.connectionState);
+    let state = store.getState();
     if (peerConection.connectionState === "disconnect" || peerConection.connectionState === "failed") {
       closePeerConnectionAndResetState();
       ui.updateStatus("disconnected");
-    }
-    if (peerConection && peerConection.connectionState === "connected") {
-      let state = store.getState();
       wss.sendConnectionStatus({
         username: state.userName,
         socketId: state.socketId,
-        remoteUser: state.remoteUser
+        remoteUser: "",
+        status: "disconnected"
+      });
+    }
+    if (peerConection && peerConection.connectionState === "connected") {
+      wss.sendConnectionStatus({
+        username: state.userName,
+        socketId: state.socketId,
+        remoteUser: state.remoteUser,
+        status: "connected"
       });
       try {
         let hangup = document.getElementById("hang_up_button");
@@ -318,7 +325,13 @@ const closePeerConnectionAndResetState = () => {
     peerConection.close();
     ui.updateStatus("disconnected");
     peerConection = null;
-    // window.location.href = "/userDisconnected";
+    let state = store.getState();
+    wss.sendConnectionStatus({
+      username: state.userName,
+      socketId: state.socketId,
+      remoteUser: "",
+      status: "disconnected"
+    });
   }
 
   // active mic and camera
