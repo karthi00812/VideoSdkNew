@@ -78,6 +78,10 @@ export const showInfoDialog = (preOfferAnswer) => {
     //   );
     alert("Call is not possible");
   }
+
+  if (preOfferAnswer === constants.preOfferAnswer.CALL_NOT_ANSWERED) {
+    alert("call is not answered");
+  }
 };
 
 export const showIncomingCallDialog = (
@@ -87,19 +91,25 @@ export const showIncomingCallDialog = (
 ) => {
   const callTypeInfo =
     callType === constants.callType.CHAT_PERSONAL_CODE ? "Chat" : "Video";
-
+  let ringtone = new Audio("./audio/cell-phone-ringing.mp3");
+  ringtone.loop = true;
   Swal.fire({
     title: "Incoming Call!!!",
     showDenyButton: false,
     showCancelButton: true,
     confirmButtonText: "Accept",
-    denyButtonText: `Cancel`
+    denyButtonText: `Cancel`,
+    timer: 15000,
+    didOpen: () => {
+      ringtone.play();
+    }
   }).then((result) => {
     if (result.isConfirmed) {
       acceptCallHandler();
     } else if (result.isDismissed) {
-      rejectCallHandler();
+      rejectCallHandler(result.dismiss);
     }
+    ringtone.pause();
   });
 };
 

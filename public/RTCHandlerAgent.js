@@ -214,9 +214,13 @@ const acceptCallHandler = (calleePersonalCode) => {
   sendPreOfferAnswer(constants.preOfferAnswer.CALL_ACCEPTED);
 };
 
-const rejectCallHandler = () => {
+const rejectCallHandler = (triggeredAction) => {
   setIncomingCallsAvailable();
-  sendPreOfferAnswer(constants.preOfferAnswer.CALL_REJECTED);
+  if (triggeredAction === "timer") {
+    sendPreOfferAnswer(constants.preOfferAnswer.CALL_NOT_ANSWERED);
+  } else {
+    sendPreOfferAnswer(constants.preOfferAnswer.CALL_REJECTED);
+  }
 };
 
 const callingDialogRejectCallHandler = () => {
