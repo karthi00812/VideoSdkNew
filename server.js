@@ -44,6 +44,13 @@ app.get("/connected_users", (req, res) => {
       connected_user: connected_user.connected_user,
       connection_type: connected_user.connection_type
     }
+    if (data.connection_type === "agent") {
+
+      let n = Object.assign({}, data);
+      n.first_name = "User";
+      n.connection_type = "user";
+      dto.push(n);
+    }
     dto.push(data);
   });
   res.send({ "users": dto });
