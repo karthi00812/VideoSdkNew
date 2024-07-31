@@ -48,8 +48,10 @@ app.get("/connected_users", (req, res) => {
 
       let n = Object.assign({}, data);
       n.first_name = "User";
-      n.connection_type = "user";
-      n.status=0;
+      n.connection_type = "test_user";
+      n.id = "test_" + data.id;
+      n.login_name = "test_" + data.login_name;
+      n.status = 0;
       dto.push(n);
     }
     dto.push(data);
