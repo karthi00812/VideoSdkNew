@@ -77,6 +77,7 @@ dropDown.addEventListener("click", () => {
     let cloneItem = dropdownItem.cloneNode(true);
     cloneItem.dataset.deviceid = item.deviceId;
     cloneItem.textContent = item.label;
+    cloneItem.title = item.label;
     cloneItem.onclick = selectDeviceVideo;
     if (selectD && selectD.video && selectD.video.dataset.deviceid === item.deviceId) {
       cloneItem.style.color = "#1e2125";
@@ -92,6 +93,7 @@ dropDown.addEventListener("click", () => {
     let cloneItem = dropdownItem.cloneNode(true);
     cloneItem.dataset.deviceid = item.deviceId;
     cloneItem.textContent = item.label;
+    cloneItem.title=item.label;
     cloneItem.onclick = selectDeviceAudio;
     if (selectD && selectD.audio && selectD.audio.dataset.deviceid === item.deviceId) {
       cloneItem.style.color = "#1e2125";
