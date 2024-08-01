@@ -95,6 +95,15 @@ const createPeerConnection = () => {
         remoteUser: "",
         status: "disconnected"
       });
+      try {
+        let hangup = document.getElementById("hang_up_button");
+        hangup.style.display = "none";
+        hangup.disabled = false;
+        let recordButton = document.getElementById("start_recording_button");
+        recordButton.style.display = "none";
+      } catch (ex) {
+        console.log(ex);
+      }
     }
     if (peerConection && peerConection.connectionState === "connected") {
       wss.sendConnectionStatus({
@@ -105,7 +114,10 @@ const createPeerConnection = () => {
       });
       try {
         let hangup = document.getElementById("hang_up_button");
+        hangup.style.display = "";
         hangup.disabled = false;
+        let recordButton = document.getElementById("start_recording_button");
+        recordButton.style.display = "";
       } catch (ex) {
         console.log(ex);
       }
@@ -336,6 +348,15 @@ const closePeerConnectionAndResetState = () => {
       remoteUser: "",
       status: "disconnected"
     });
+    try {
+      let hangup = document.getElementById("hang_up_button");
+      hangup.style.display = "none";
+      hangup.disabled = false;
+      let recordButton = document.getElementById("start_recording_button");
+      recordButton.style.display = "none";
+    } catch (ex) {
+      console.log(ex);
+    }
   }
 
   // active mic and camera

@@ -338,7 +338,7 @@ body {
   padding: 1rem;
   bottom: 40px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   background: #343434;
   margin-right: 2.5rem;
