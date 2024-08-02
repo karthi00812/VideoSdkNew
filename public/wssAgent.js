@@ -35,21 +35,18 @@ export const registerSocketEvents = (socket) => {
   socket.on("disconnect", () => {
     Swal.fire({
       title: "You were disconnected from server!!!",
-      showDenyButton: true,
+      showDenyButton: false,
       showCancelButton: false,
-      confirmButtonText: "Refresh",
-      denyButtonText: `Close`,
+      confirmButtonText: "Close",
       didOpen: () => {
         ringtone.play();
       },
-      didClose:()=>{
-        document.querySelector("#user_id").textContent="####";
+      didClose: () => {
+        document.querySelector("#user_id").textContent = "####";
       }
     }).then((result) => {
       if (result.isConfirmed) {
-        location.reload();
-      }else{
-
+        console.log("popup closed");
       }
       ringtone.pause();
     });

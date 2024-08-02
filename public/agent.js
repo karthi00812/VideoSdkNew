@@ -151,15 +151,16 @@ const status = document.querySelector("#status");
 status.textContent = "Not Connected";
 
 let socket = null;
-
+document.querySelector("#status").textContent = "VC Disconnected";
 const connect_vc = document.querySelector("#connect_vc")
 connect_vc.addEventListener("click", () => {
 
   if (connect_vc.dataset.status === "disconnected") {
     connect_vc.classList.remove("btn-secondary");
     connect_vc.classList.add("btn-success");
-    connect_vc.textContent = "VC Connected";
+    connect_vc.textContent = "Disconnect VC";
     connect_vc.dataset.status = "connected";
+    document.querySelector("#status").textContent = "VC Connected";
     socket = io("/");
     socketCon.registerSocketEvents(socket);
   } else {
@@ -167,6 +168,7 @@ connect_vc.addEventListener("click", () => {
     connect_vc.classList.remove("btn-success");
     connect_vc.textContent = "Connect VC";
     connect_vc.dataset.status = "disconnected";
+    document.querySelector("#status").textContent = "VC Disconnected";
     socket.close();
   }
 });
