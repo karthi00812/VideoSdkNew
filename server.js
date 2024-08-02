@@ -1,7 +1,7 @@
 const express = require("express");
 const http = require("http");
 
-const PORT = process.env.PORT || 3002;
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 const server = http.createServer(app);
@@ -23,6 +23,11 @@ app.get("/userDisconnected", (req, res) => {
 
 app.get("/agent", (req, res) => {
   res.sendFile(__dirname + "/public/agent.html");
+});
+
+app.get("/disconnect", (req, res) => {
+  io.disconnectSockets();
+  res.send({ status: "disconnected", msg: "all users were disconnected" });
 });
 
 app.get("/connected_users", (req, res) => {

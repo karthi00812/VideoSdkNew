@@ -10,7 +10,8 @@ let state = {
   callState: constants.callState.CALL_AVAILABLE_ONLY_CHAT,
   userName: null,
   remoteUser: null,
-  applicationid: null
+  applicationid: null,
+  muted: true
 };
 let mediaDevices = [];
 let videoDevices = [];
@@ -132,9 +133,17 @@ export const getAudioTrackSender = () => {
 }
 
 export const setApplicationId = (application_id) => {
-  state.applicationid=application_id;
+  state.applicationid = application_id;
 }
 
 export const getApplicationId = () => {
   return state.applicationid;
+}
+
+export const setMute = (mutedState) => {
+  state.muted = mutedState;
+}
+
+export const getMute = () => {
+  return state.muted;
 }

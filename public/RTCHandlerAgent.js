@@ -136,6 +136,11 @@ const createPeerConnection = () => {
   ) {
     const localStream = store.getState().localStream;
 
+    if (store.getMute()) {
+      localStream.getAudioTracks()[0].enabled = true;
+    } else {
+      localStream.getAudioTracks()[0].enabled = false;
+    }
     for (const track of localStream.getTracks()) {
       let sender = peerConection.addTrack(track, localStream);
       if (track.kind === "video") {

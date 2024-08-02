@@ -31,6 +31,28 @@ export const registerSocketEvents = (socket) => {
     window.location.href = "/userDisconnected";
   });
 
+  let ringtone = new Audio("./audio/user_disconnect.mp3");
+  socket.on("disconnect", () => {
+    Swal.fire({
+      title: "You were disconnected from server!!!",
+      showDenyButton: false,
+      showCancelButton: true,
+      confirmButtonText: "Refresh",
+      denyButtonText: `Cancel`,
+      didOpen: () => {
+        ringtone.play();
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        location.reload();
+      } else if (result.isDismissed) {
+        window.location.href = "/userDisconnected";
+      }
+      ringtone.pause();
+    });
+  });
+
+
   socket.on("webRTC-signaling", (data) => {
     switch (data.type) {
       case constants.webRTCSignaling.OFFER:
@@ -65,5 +87,5 @@ export const sendUserHangedUp = (data) => {
 };
 
 export const sendConnectionStatus = (data) => {
-  socketIO.emit("updateConnectionStatus",data);
+  socketIO.emit("updateConnectionStatus", data);
 };
