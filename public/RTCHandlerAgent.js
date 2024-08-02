@@ -101,6 +101,9 @@ const createPeerConnection = () => {
         hangup.disabled = false;
         let recordButton = document.getElementById("start_recording_button");
         recordButton.style.display = "none";
+        const connectBtn = document.querySelector("#connect_vc");
+        connectBtn.disabled = false;
+        connectBtn.style.cursor = "pointer";
       } catch (ex) {
         console.log(ex);
       }
@@ -118,6 +121,9 @@ const createPeerConnection = () => {
         hangup.disabled = false;
         let recordButton = document.getElementById("start_recording_button");
         recordButton.style.display = "";
+        const connectBtn = document.querySelector("#connect_vc");
+        connectBtn.disabled = true;
+        connectBtn.style.cursor = "not-allowed";
       } catch (ex) {
         console.log(ex);
       }
@@ -359,6 +365,9 @@ const closePeerConnectionAndResetState = () => {
       hangup.disabled = false;
       let recordButton = document.getElementById("start_recording_button");
       recordButton.style.display = "none";
+      const connectBtn = document.querySelector("#connect_vc");
+        connectBtn.disabled = false;
+        connectBtn.style.cursor = "pointer";
     } catch (ex) {
       console.log(ex);
     }

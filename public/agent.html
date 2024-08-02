@@ -28,8 +28,13 @@
                         </li>
                     </ul>
                 </div>
-
-                <div style="position: absolute;color: aliceblue;padding: 1rem;"><span id="user_id">#####</span></div>
+                <div
+                    style="display: flex;align-items: center;justify-content: left;padding-left: 1rem;position: absolute;background-color: #adadaddb;border-radius: 7px;margin: 0.5rem;z-index: 5;">
+                    <button type="button" class="btn btn-secondary" id="connect_vc" data-status="disconnected">Connect
+                        VC</button>
+                    <div style="color: aliceblue;padding: 1rem;"><span id="user_id">#####</span>
+                    </div>
+                </div>
                 <div style="position: absolute;color: aliceblue;padding: 1rem;bottom: 0rem;right: 0rem;">Status: <span
                         id="status">#####</span></div>
                 <video class='remote_video' playsinline autoplay id='remote_video'></video>

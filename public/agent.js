@@ -3,9 +3,7 @@ import * as socketCon from "./wssAgent.js";
 import * as store from "./store.js"
 import * as ui from "./uiInteract.js"
 import * as recordingUtils from "./recordingUtil.js"
-const socket = io("/");
 webRTCHandler.getLocalPreview();
-socketCon.registerSocketEvents(socket);
 
 const micButton = document.getElementById("mic_button");
 micButton.addEventListener("click", () => {
@@ -151,3 +149,24 @@ function selectDeviceAudio(event) {
 
 const status = document.querySelector("#status");
 status.textContent = "Not Connected";
+
+let socket = null;
+
+const connect_vc = document.querySelector("#connect_vc")
+connect_vc.addEventListener("click", () => {
+
+  if (connect_vc.dataset.status === "disconnected") {
+    connect_vc.classList.remove("btn-secondary");
+    connect_vc.classList.add("btn-success");
+    connect_vc.textContent = "VC Connected";
+    connect_vc.dataset.status = "connected";
+    socket = io("/");
+    socketCon.registerSocketEvents(socket);
+  } else {
+    connect_vc.classList.add("btn-secondary");
+    connect_vc.classList.remove("btn-success");
+    connect_vc.textContent = "Connect VC";
+    connect_vc.dataset.status = "disconnected";
+    socket.close();
+  }
+});
