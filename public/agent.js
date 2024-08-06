@@ -172,3 +172,33 @@ connect_vc.addEventListener("click", () => {
     socket.close();
   }
 });
+
+
+// timeout 
+let session = new IdleSessionTimeout(5 * 60 * 1000);
+// let session = new IdleSessionTimeout(500);
+
+session.onTimeOut = () => {
+  // here you can call your server to log out the user
+  let ringtone = new Audio("./audio/user_disconnect.mp3");
+  Swal.fire({
+    title: "Session Expired, Please Login Again",
+    showDenyButton: false,
+    showCancelButton: false,
+    confirmButtonText: "Refresh",
+    denyButtonText: `Cancel`,
+    allowOutsideClick: false,
+    didOpen: () => {
+      ringtone.play();
+    }
+  }).then((result) => {
+    if (result.isConfirmed) {
+      window.location.href = "/agent";
+    }
+    ringtone.pause();
+  });
+
+};
+
+session.start();
+
