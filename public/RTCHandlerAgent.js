@@ -95,6 +95,7 @@ const createPeerConnection = () => {
         remoteUser: "",
         status: "disconnected"
       });
+
       try {
         let hangup = document.getElementById("hang_up_button");
         hangup.style.display = "none";
@@ -104,6 +105,9 @@ const createPeerConnection = () => {
         const connectBtn = document.querySelector("#connect_vc");
         connectBtn.disabled = false;
         connectBtn.style.cursor = "pointer";
+        if (session) {
+          session.start();
+        }
       } catch (ex) {
         console.log(ex);
       }
@@ -124,6 +128,9 @@ const createPeerConnection = () => {
         const connectBtn = document.querySelector("#connect_vc");
         connectBtn.disabled = true;
         connectBtn.style.cursor = "not-allowed";
+        if (session) {
+          session.dispose();
+        }
       } catch (ex) {
         console.log(ex);
       }
@@ -366,8 +373,8 @@ const closePeerConnectionAndResetState = () => {
       let recordButton = document.getElementById("start_recording_button");
       recordButton.style.display = "none";
       const connectBtn = document.querySelector("#connect_vc");
-        connectBtn.disabled = false;
-        connectBtn.style.cursor = "pointer";
+      connectBtn.disabled = false;
+      connectBtn.style.cursor = "pointer";
     } catch (ex) {
       console.log(ex);
     }

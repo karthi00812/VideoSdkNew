@@ -75,6 +75,13 @@ const createPeerConnection = () => {
         remoteUser: "",
         status: "disconnected"
       });
+      try {
+        if (session) {
+          session.start();
+        }
+      } catch (ex) {
+        console.log(ex);
+      }
     }
     if (peerConection && peerConection.connectionState === "connected") {
       wss.sendConnectionStatus({
@@ -86,6 +93,9 @@ const createPeerConnection = () => {
       try {
         let hangup = document.getElementById("hang_up_button");
         hangup.disabled = false;
+        if (session) {
+          session.dispose();
+        }
       } catch (ex) {
         console.log(ex);
       }
