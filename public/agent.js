@@ -177,11 +177,11 @@ connect_vc.addEventListener("click", () => {
 
 
 // timeout 
-export let session = new IdleSessionTimeout(2 * 60 * 1000);
+export let session = new IdleSessionTimeout(10 * 60 * 1000);
 // let session = new IdleSessionTimeout(500);
 
 session.onTimeOut = () => {
-  
+
   connect_vc.click();
   // here you can call your server to log out the user
   let ringtone = new Audio("./audio/user_disconnect.mp3");
