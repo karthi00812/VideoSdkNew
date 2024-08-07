@@ -163,6 +163,7 @@ connect_vc.addEventListener("click", () => {
     document.querySelector("#status").textContent = "VC Connected";
     socket = io("/");
     socketCon.registerSocketEvents(socket);
+    session.start();
   } else {
     connect_vc.classList.add("btn-secondary");
     connect_vc.classList.remove("btn-success");
@@ -170,15 +171,18 @@ connect_vc.addEventListener("click", () => {
     connect_vc.dataset.status = "disconnected";
     document.querySelector("#status").textContent = "VC Disconnected";
     socket.close();
+    session.dispose();
   }
 });
 
 
 // timeout 
-let session = new IdleSessionTimeout(5 * 60 * 1000);
+export let session = new IdleSessionTimeout(2 * 60 * 1000);
 // let session = new IdleSessionTimeout(500);
 
 session.onTimeOut = () => {
+  
+  connect_vc.click();
   // here you can call your server to log out the user
   let ringtone = new Audio("./audio/user_disconnect.mp3");
   Swal.fire({
@@ -199,6 +203,3 @@ session.onTimeOut = () => {
   });
 
 };
-
-session.start();
-
