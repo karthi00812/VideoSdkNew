@@ -60,7 +60,9 @@ export const showInfoDialog = (preOfferAnswer) => {
     //     "Call rejected",
     //     "Callee rejected your call"
     //   );
-    alert("call rejected");
+    // alert("call rejected");
+    // Android && Android.callCallBack("CallRejectedByAgent");
+    callNFI("CallRejectedByAgent");
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
@@ -68,7 +70,9 @@ export const showInfoDialog = (preOfferAnswer) => {
     //     "Callee not found",
     //     "Please check personal code"
     //   );
-    alert("callee not found");
+    // alert("CallIdNotFound");
+    // Android && Android.callCallBack("CallIdNotFound");
+    callNFI("CallIdNotFound");
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
@@ -76,14 +80,24 @@ export const showInfoDialog = (preOfferAnswer) => {
     //     "Call is not possible",
     //     "Probably callee is busy. Please try againg later"
     //   );
-    alert("Call is not possible");
+    // alert("Call is not possible");
+    // Android && Android.callCallBack("AgentBusy");
+    callNFI("AgentBusy");
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALL_NOT_ANSWERED) {
-    alert("call is not answered");
+    // alert("call is not answered");
+    // Android && Android.callCallBack("CallNotAnswered");
+    callNFI("CallNotAnswered");
   }
 };
 
+const callNFI = (msg) => {
+  if (window.Android !== undefined) {
+    Android && Android.callCallBack(msg);
+    console.log(msg);
+  }
+}
 export const showIncomingCallDialog = (
   callType,
   acceptCallHandler,
