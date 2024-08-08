@@ -62,7 +62,7 @@ export const showInfoDialog = (preOfferAnswer) => {
     //   );
     // alert("call rejected");
     // Android && Android.callCallBack("CallRejectedByAgent");
-    callNFI("CallRejectedByAgent");
+    callNFI("onReject");
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
@@ -92,7 +92,7 @@ export const showInfoDialog = (preOfferAnswer) => {
   }
 };
 
-const callNFI = (msg) => {
+export const callNFI = (msg) => {
   if (window.Android !== undefined) {
     Android && Android.callCallBack(msg);
     console.log(msg);
