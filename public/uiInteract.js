@@ -1,5 +1,5 @@
-
 import * as constants from "./constants.js";
+import * as store from "./store.js";
 
 export const updateLocalVideo = (stream) => {
   const localVideo = document.getElementById("local_video");
@@ -27,6 +27,7 @@ const showElement = (element) => {
   }
 };
 
+const connected_user = document.getElementById("connected_user");
 
 export const updatePersonalCode = (personalCode) => {
   const personal = document.getElementById(
@@ -36,8 +37,6 @@ export const updatePersonalCode = (personalCode) => {
     personal.textContent = personalCode;
   }
   console.log(personalCode);
-
-
 };
 
 export const showCallingDialog = (rejectCallHandler) => {
@@ -56,38 +55,18 @@ export const showInfoDialog = (preOfferAnswer) => {
   let infoDialog = null;
 
   if (preOfferAnswer === constants.preOfferAnswer.CALL_REJECTED) {
-    //   infoDialog = elements.getInfoDialog(
-    //     "Call rejected",
-    //     "Callee rejected your call"
-    //   );
-    // alert("call rejected");
-    // Android && Android.callCallBack("CallRejectedByAgent");
     callNFI("onReject");
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALLEE_NOT_FOUND) {
-    //   infoDialog = elements.getInfoDialog(
-    //     "Callee not found",
-    //     "Please check personal code"
-    //   );
-    // alert("CallIdNotFound");
-    // Android && Android.callCallBack("CallIdNotFound");
     callNFI("CallIdNotFound");
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALL_UNAVAILABLE) {
-    //   infoDialog = elements.getInfoDialog(
-    //     "Call is not possible",
-    //     "Probably callee is busy. Please try againg later"
-    //   );
-    // alert("Call is not possible");
-    // Android && Android.callCallBack("AgentBusy");
     callNFI("AgentBusy");
   }
 
   if (preOfferAnswer === constants.preOfferAnswer.CALL_NOT_ANSWERED) {
-    // alert("call is not answered");
-    // Android && Android.callCallBack("CallNotAnswered");
     callNFI("CallNotAnswered");
   }
 };
@@ -199,4 +178,13 @@ status.textContent = "Not Connected";
 
 export const updateStatus = (statusContent) => {
   status.textContent = statusContent;
+  if (connected_user) {
+    connected_user.textContent = "";
+  }
 };
+
+export const updateConnectedUser = () => {
+  if (connected_user) {
+    connected_user.textContent = store.getRemoteUser();
+  }
+}

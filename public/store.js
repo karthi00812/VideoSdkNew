@@ -90,6 +90,11 @@ export const setRemoteUser = (remoteUser) => {
   state.remoteUser = remoteUser;
 };
 
+export const getRemoteUser = () => {
+  return state.remoteUser;
+};
+
+
 export const setMediaDevices = async () => {
   if (mediaDevices.length == 0) {
     mediaDevices = await navigator.mediaDevices.enumerateDevices();

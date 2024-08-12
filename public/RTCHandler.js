@@ -77,9 +77,6 @@ const createPeerConnection = () => {
       });
       try {
         ui.callNFI("onConferenceEnd");
-        if (session) {
-          session.start();
-        }
       } catch (ex) {
         console.log(ex);
       }
@@ -96,9 +93,7 @@ const createPeerConnection = () => {
         hangup.disabled = false;
         ui.callNFI("onAccept");
         ui.callNFI("onConferenceStart");
-        if (session) {
-          session.dispose();
-        }
+        ui.updateConnectedUser();
       } catch (ex) {
         console.log(ex);
       }
