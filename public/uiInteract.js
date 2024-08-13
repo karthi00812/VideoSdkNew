@@ -74,6 +74,7 @@ export const showInfoDialog = (preOfferAnswer) => {
 export const callNFI = (msg) => {
 
   console.log(msg);
+  alert(msg);
   try {
     Android && Android.callCallBack(msg);
   } catch (ex) {
