@@ -76,7 +76,7 @@ const createPeerConnection = () => {
         status: "disconnected"
       });
       try {
-        ui.callNFI("onConferenceEnd", true);
+        ui.callNFI("onConferenceEnd");
       } catch (ex) {
         console.log(ex);
       }
@@ -91,8 +91,8 @@ const createPeerConnection = () => {
       try {
         let hangup = document.getElementById("hang_up_button");
         hangup.disabled = false;
-        ui.callNFI("onAccept", false);
-        ui.callNFI("onConferenceStart", false);
+        ui.callNFI("onAccept");
+        ui.callNFI("onConferenceStart");
         ui.updateConnectedUser();
       } catch (ex) {
         console.log(ex);
