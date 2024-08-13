@@ -72,10 +72,10 @@ export const showInfoDialog = (preOfferAnswer) => {
 };
 
 export const callNFI = (msg) => {
-  
+
+  console.log(msg);
   try {
     Android && Android.callCallBack(msg);
-    console.log(msg);
   } catch (ex) {
     console.log("NFI Android is not defined");
   }
