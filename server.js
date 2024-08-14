@@ -35,16 +35,26 @@ app.get("/disconnect", (req, res) => {
 });
 
 app.post("/upload-file", async (req, res) => {
-  console.log(req.header("Content-Type"));
-  let applicationId = "";
+  let applicationId = req.header("fileName");
+  let fileName = "recordings" + applicationId + ".webm";
   let data = [];
   req.on('data', chunk => {
     data.push(chunk);
   });
   req.on('end', () => {
-    // console.log('POST data:', data);
-    fsProm.writeFile("file.webm", data);
-    res.end('Data received');
+    fsProm.mkdir("./recordings").then(() => {
+      fsProm.writeFile("./recordings/" + fileName, data).then((result) => {
+        console.log("Success");
+        res.send({ "status": "success" });
+      }).catch((result) => {
+        console.log("Failed");
+        res.statusCode = 500;
+        res.send({ "status": "failed" });
+      });
+    }).catch(() => {
+      res.statusCode = 500;
+      res.send({ "status": "failed" });
+    });
   });
 });
 
