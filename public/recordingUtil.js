@@ -44,6 +44,23 @@ const downloadRecordedVideo = () => {
   a.download = "recording.webm";
   a.click();
   window.URL.revokeObjectURL(url);
+
+  const myHeaders = new Headers();
+  myHeaders.append("Content-Type", "video/webm");
+
+  const file = blob;
+
+  const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: file,
+    redirect: "follow"
+  };
+
+  fetch("/upload-file", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
 };
 
 const handleDataAvailable = (event) => {
