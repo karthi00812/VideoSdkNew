@@ -316,6 +316,7 @@ const closePeerConnectionAndResetState = () => {
   if (peerConection) {
     peerConection.close();
     ui.updateStatus("disconnect");
+    ui.callNFI("onConferenceEnd");
     peerConection = null;
     let state = store.getState();
     wss.sendConnectionStatus({
