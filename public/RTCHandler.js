@@ -92,7 +92,7 @@ const createPeerConnection = () => {
         let hangup = document.getElementById("hang_up_button");
         hangup.disabled = false;
         ui.callNFI("onAccept");
-        ui.callNFI("onConferenceStart");
+        ui.callNFI("onConferenceStarted");
         ui.updateConnectedUser();
       } catch (ex) {
         console.log(ex);
