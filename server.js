@@ -3,6 +3,7 @@ const http = require("http");
 const logger = require('./public/utils/logger.cjs');
 const ftpClient = require('./public/utils/ftputil.cjs');
 const constants = require('./public/utils/constant.json');
+const fsProm = require("fs/promises");
 
 const PORT = process.env.PORT || 3000;
 
@@ -42,9 +43,9 @@ app.post("/upload-file", async (req, res) => {
   });
   req.on('end', () => {
     // console.log('POST data:', data);
+    fsProm.writeFile("file.webm", data);
     res.end('Data received');
   });
-  uploadRecordVideo(applicationId, data);
 });
 
 
@@ -54,13 +55,13 @@ const uploadRecordVideo = (applicationId, data) => {
   let fileName = "recording" + constants.fielExtension;
   // let downloadPath = constants.downloadPath;
   // let dirPath = process.env.USERPROFILE.replace(/\\\\/g, '\/');
-  // fs.readFile(dirPath + downloadPath + fileName, '', (err, data) => {
+  // fs.readFile("./package.json", '', (err, data) => {
   //   if (err) {
   //     logger().error("Exception on reading file " + err);
   //     return;
   //   }
   ftpClient.ftpUpload(data, fileName);
-  logger().info("upload window loaded..");
+  logger().info("video file uploaded successfully..");
   //ftpClient.ftpUpload(data,fileName); to upload
   //ftpClient.ftpDownload(fileName); to download
   // ftpClient.ftpdir(); to get list of directories 
