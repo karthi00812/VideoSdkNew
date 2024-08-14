@@ -38,7 +38,6 @@ app.post("/upload-file", async (req, res) => {
   let applicationId = "";
   let data = [];
   req.on('data', chunk => {
-    console.log(typeof chunk);
     data.push(chunk);
   });
   req.on('end', () => {
