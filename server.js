@@ -1,7 +1,6 @@
 const express = require("express");
 const http = require("http");
 const logger = require('./public/utils/logger.cjs');
-const logger = require('./public/utils/logger.cjs');
 const ftpClient = require('./public/utils/ftputil.cjs');
 const constants = require('./public/utils/constant.json');
 
