@@ -32,7 +32,7 @@ app.get("/disconnect", (req, res) => {
 
 app.post("/upload-file", async (req, res) => {
   console.log(req.header("Content-Type"));
-
+  let applicationId = "";
   let data = [];
   req.on('data', chunk => {
     console.log(typeof chunk);
