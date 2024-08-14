@@ -43,6 +43,11 @@ export const registerSocketEvents = (socket) => {
       },
       didClose: () => {
         document.querySelector("#user_id").textContent = "####";
+        const connect_vc = document.querySelector("#connect_vc")
+        connect_vc.classList.add("btn-secondary");
+        connect_vc.classList.remove("btn-success");
+        connect_vc.textContent = "Connect VC";
+        connect_vc.dataset.status = "disconnected";
       }
     }).then((result) => {
       if (result.isConfirmed) {

@@ -47,7 +47,10 @@ const downloadRecordedVideo = () => {
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "video/webm");
-  myHeaders.append("fileName", "PBK");
+  let appId = "";
+  appId = store.getApplicationId();
+  appId = appId == "" ? "PBK" : appId;
+  myHeaders.append("fileName", appId);
 
   const file = blob;
 
