@@ -30,6 +30,42 @@ app.get("/disconnect", (req, res) => {
   res.send({ status: "disconnected", msg: "all users were disconnected" });
 });
 
+app.post("/upload-file", async (req, res) => {
+  console.log(req.header("Content-Type"));
+
+  let data = [];
+  req.on('data', chunk => {
+    console.log(typeof chunk);
+    data.push(chunk);
+  });
+  req.on('end', () => {
+    // console.log('POST data:', data);
+    res.end('Data received');
+  });
+  uploadRecordVideo(applicationId, data);
+});
+
+
+const uploadRecordVideo = (applicationId, data) => {
+
+  logger().info("upload window loaded..");
+  let fileName = "recording" + constants.fielExtension;
+  // let downloadPath = constants.downloadPath;
+  // let dirPath = process.env.USERPROFILE.replace(/\\\\/g, '\/');
+  // fs.readFile(dirPath + downloadPath + fileName, '', (err, data) => {
+  //   if (err) {
+  //     logger().error("Exception on reading file " + err);
+  //     return;
+  //   }
+  ftpClient.ftpUpload(data, fileName);
+  logger().info("upload window loaded..");
+  //ftpClient.ftpUpload(data,fileName); to upload
+  //ftpClient.ftpDownload(fileName); to download
+  // ftpClient.ftpdir(); to get list of directories 
+  // });
+}
+
+
 app.get("/connected_users", (req, res) => {
   let dto = [];
   connectedUser.forEach((connected_user) => {
