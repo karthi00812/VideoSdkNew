@@ -11,6 +11,9 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.19.2",
-    "socket.io": "^4.7.5"
+    "ftp": "^0.3.10",
+    "socket.io": "^4.7.5",
+    "winston": "^3.14.1",
+    "winston-daily-rotate-file": "^5.0.0"
   }
 }
