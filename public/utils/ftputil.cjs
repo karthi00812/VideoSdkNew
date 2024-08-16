@@ -4,10 +4,10 @@ const logger = require('./logger.cjs');
 const constants = require('./constant.json');
 
 const getFtpDetails = {
-  host: 'eu-central-1.sftpcloud.io',
+  host: '10.126.200.41',
   port: 21,
-  user: 'd6fb6f12752f42449c71226b01ddf021',
-  password: 'NhCbOIv81LsTlbxxCMjxxza578Fo71ZU',
+  user: 'konynodejs',
+  password: 'p@ssw0rd',
   secure: false,
   secureOptions: 'none',
   connTimeout: 10000,

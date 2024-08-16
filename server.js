@@ -38,20 +38,23 @@ app.get("/disconnect", (req, res) => {
 app.post("/upload-file", async (req, res) => {
   let applicationId = req.header("fileName");
   let fileName = applicationId + constants.fielExtension;
-  console.log(fileName);
+  logger().info("upload-file request fileName--" + fileName);
   let data = []; let directoryPath = "./recordings";
   req.on('data', chunk => {
     data.push(chunk);
   });
   req.on('end', () => {
     if (!fs.existsSync(directoryPath)) {
+      logger().info("mkdir directory");
       fsProm.mkdir(directoryPath).then(() => {
         const response = saveRecordings(fileName, data);
         res.statusCode = response.code;
+        logger().info("file save status " + response.status);
         res.send({ "status": response.status });
       }).catch((result) => {
         console.log(result);
         res.statusCode = 500;
+        logger().info("upload-file failed " + result);
         res.send({ "status": "failed" });
       });
     } else {
@@ -63,10 +66,12 @@ app.post("/upload-file", async (req, res) => {
 const saveRecordings = (fileName, data) => {
   fsProm.writeFile("./recordings/" + fileName, data).then((result) => {
     console.log("Success");
+    logger().info(fileName + " file saved successfully ./recordings/" + fileName);
     uploadRecordVideo(fileName);
     return { "status": "success", code: 200 };
   }).catch((result) => {
     console.log("Failed" + result);
+    logger().info(fileName + " file save failed ./recordings/" + fileName);
     return { "status": "failed", code: 500 };
   });
 }
