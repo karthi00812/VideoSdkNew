@@ -36,20 +36,22 @@ const downloadRecordedVideo = () => {
     type: "video/webm",
   });
 
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  document.body.appendChild(a);
-  a.style = "display: none;";
-  a.href = url;
-  a.download = "recording.webm";
-  a.click();
-  window.URL.revokeObjectURL(url);
+  // const url = URL.createObjectURL(blob);
+  // const a = document.createElement("a");
+  // document.body.appendChild(a);
+  // a.style = "display: none;";
+  // a.href = url;
+  // a.download = "recording.webm";
+  // a.click();
+  // window.URL.revokeObjectURL(url);
 
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "video/webm");
   let appId = "";
   appId = store.getApplicationId();
-  appId = appId == "" ? "PBK" : appId;
+  if (!appId) {
+    appId = "recordings-sample-name";
+  }
   myHeaders.append("fileName", appId);
 
   const file = blob;

@@ -6,8 +6,8 @@ const constants = require('./constant.json');
 const getFtpDetails = {
   host: 'eu-central-1.sftpcloud.io',
   port: 21,
-  user: '1435199f65c14727a7f5f8d8ed49f77f',
-  password: 'Ex6diffjflFrs6eLUPc8nB6OY9BSTQyp',
+  user: 'd6fb6f12752f42449c71226b01ddf021',
+  password: 'NhCbOIv81LsTlbxxCMjxxza578Fo71ZU',
   secure: false,
   secureOptions: 'none',
   connTimeout: 10000,
