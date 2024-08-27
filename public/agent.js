@@ -2,7 +2,6 @@ import * as webRTCHandler from "./RTCHandlerAgent.js";
 import * as socketCon from "./wssAgent.js";
 import * as store from "./store.js"
 import * as ui from "./uiInteract.js"
-import * as recordingUtils from "./recordingUtil.js"
 webRTCHandler.getLocalPreview();
 
 const micButton = document.getElementById("mic_button");
@@ -18,6 +17,7 @@ micButton.addEventListener("click", () => {
   ui.updateMicButton(micEnabled);
 });
 
+let URLParams = new URLSearchParams(window.location.search);
 
 const cameraButton = document.getElementById("camera_button");
 cameraButton.addEventListener("click", () => {
@@ -28,31 +28,31 @@ cameraButton.addEventListener("click", () => {
 });
 
 
-const startRecordingButton = document.getElementById("start_recording_button");
-startRecordingButton.addEventListener("click", () => {
-  recordingUtils.startRecording();
-  ui.showRecordingPanel();
-});
+// const startRecordingButton = document.getElementById("start_recording_button");
+// startRecordingButton.addEventListener("click", () => {
+//   recordingUtils.startRecording();
+//   ui.showRecordingPanel();
+// });
 
-const stopRecordingButton = document.getElementById("stop_recording_button");
-stopRecordingButton.addEventListener("click", () => {
-  recordingUtils.stopRecording();
-  ui.resetRecordingButtons();
-});
+// const stopRecordingButton = document.getElementById("stop_recording_button");
+// stopRecordingButton.addEventListener("click", () => {
+//   recordingUtils.stopRecording();
+//   ui.resetRecordingButtons();
+// });
 
-const pauseRecordingButton = document.getElementById("pause_recording_button");
-pauseRecordingButton.addEventListener("click", () => {
-  recordingUtils.pauseRecording();
-  ui.switchRecordingButtons(true);
-});
+// const pauseRecordingButton = document.getElementById("pause_recording_button");
+// pauseRecordingButton.addEventListener("click", () => {
+//   recordingUtils.pauseRecording();
+//   ui.switchRecordingButtons(true);
+// });
 
-const resumeRecordingButton = document.getElementById(
-  "resume_recording_button"
-);
-resumeRecordingButton.addEventListener("click", () => {
-  recordingUtils.resumeRecording();
-  ui.switchRecordingButtons();
-});
+// const resumeRecordingButton = document.getElementById(
+//   "resume_recording_button"
+// );
+// resumeRecordingButton.addEventListener("click", () => {
+//   recordingUtils.resumeRecording();
+//   ui.switchRecordingButtons();
+// });
 
 // hang up
 
@@ -65,6 +65,11 @@ const changeCamer = document.querySelector(".dropdown-item");
 changeCamer.addEventListener("click", () => {
   console.log(store.getVideoDevices());
 });
+
+if (URLParams.get("channel")) {
+  store.setDevice(URLParams.get("channel"));
+}
+
 
 let dropDown = document.querySelector(".dropdown");
 let dropDownMenu = document.querySelector(".dropdown-menu");
@@ -177,7 +182,7 @@ connect_vc.addEventListener("click", () => {
 
 
 // timeout 
-export let session = new IdleSessionTimeout(10 * 60 * 1000);
+export let session = new IdleSessionTimeout(120 * 60 * 1000);
 // let session = new IdleSessionTimeout(500);
 
 session.onTimeOut = () => {

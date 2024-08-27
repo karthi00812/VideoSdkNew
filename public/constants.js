@@ -29,11 +29,11 @@ export const callState = {
 let myPeerConnectionMetered = {
     iceServers:
         [
-            { urls: "stun:stun.relay.metered.ca:80", },
-            // { urls: "turn:ekyc2turndev.d1g1talpanin.com:3478?transport=tcp", username: "admin1", credential: "888888", },
-            { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", },
-            { urls: "turn:global.relay.metered.ca:443", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", },
-            { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", }
+             { urls: "stun:stun.relay.metered.ca:80", },
+           // { urls: "turn:ekyc2turndev.d1g1talpanin.com:3478?transport=tcp", username: "admin1", credential: "888888", },
+             { urls: "turn:global.relay.metered.ca:80?transport=tcp", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", },
+             { urls: "turn:global.relay.metered.ca:443", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", },
+             { urls: "turns:global.relay.metered.ca:443?transport=tcp", username: "ac93305a1ce22d2b221ba4d7", credential: "MZ4xTXHHSDwS4roA", }
         ],
 };
 

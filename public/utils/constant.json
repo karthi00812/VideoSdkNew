@@ -1,5 +1,6 @@
 {
     "downloadPath":"/recordings/",
     "remoteFilePath":"/",
-    "fielExtension":".webm"
+    "fielExtension":".webm",
+    "isPaninServer":"true"
 }

@@ -1,16 +1,23 @@
 const express = require("express");
 const http = require("http");
+const fs = require('fs');
+const util = require('util');
 const logger = require('./public/utils/logger.cjs');
 const ftpClient = require('./public/utils/ftputil.cjs');
 const constants = require('./public/utils/constant.json');
+const DEFAULT_PORT = 8080;
+let baseUrl = "";
+//const DEFAULT_LOG = '/app/serverlogs/serverlog.txt';
 const fsProm = require("fs/promises");
-const fs = require("fs");
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || DEFAULT_PORT;
+//const LOG =  process.env.LOG || DEFAULT_LOG;
 
 const app = express();
 const server = http.createServer(app);
 const io = require("socket.io")(server);
+//onst logFile = fs.createWriteStream(LOG, { flags: 'a' });
+//const logStdout = process.stdout;
 
 app.use(express.static("public"));
 
@@ -27,6 +34,8 @@ app.get("/userDisconnected", (req, res) => {
 });
 
 app.get("/agent", (req, res) => {
+  logger().info("agent window loaded..");
+  baseUrl = req.headers.host; 
   res.sendFile(__dirname + "/public/agent.html");
 });
 
@@ -34,6 +43,7 @@ app.get("/disconnect", (req, res) => {
   io.disconnectSockets();
   res.send({ status: "disconnected", msg: "all users were disconnected" });
 });
+
 
 app.post("/upload-file", async (req, res) => {
   let applicationId = req.header("fileName");
@@ -68,33 +78,36 @@ const saveRecordings = (fileName, data) => {
     console.log("Success");
     logger().info(fileName + " file saved successfully ./recordings/" + fileName);
     uploadRecordVideo(fileName);
-    return { "status": "success", code: 200 };
+    return { "status": "success", "code": 200 };
   }).catch((result) => {
     console.log("Failed" + result);
     logger().info(fileName + " file save failed ./recordings/" + fileName);
-    return { "status": "failed", code: 500 };
+    return { "status": "failed", "code": 500 };
   });
 }
 
 const uploadRecordVideo = (applicationId) => {
-
-  logger().info("upload window loaded..");
+  logger().info("upload video started with applicationId..:"+applicationId);
   let fileName = applicationId;
   let downloadPath = constants.downloadPath;
-  let dirPath = process.env.USERPROFILE.replace(/\\\\/g, '\/');
+  let isPaninServer = constants.isPaninServer;
   fs.readFile("." + downloadPath + fileName, '', (err, data) => {
     if (err) {
       logger().error("Exception on reading file " + err);
       return;
     }
-    ftpClient.ftpUpload(data, fileName);
+    try {
+      if (isPaninServer == "true")
+        ftpClient.ftpUpload(data, fileName);
+      else
+        logger().info("ftp connection not available for ..." + baseUrl);
+    } catch (ex) {
+      logger().info("video file uploaded falied.." + ex);
+      return;
+    }
     logger().info("video file uploaded successfully..");
-    //ftpClient.ftpUpload(data,fileName); to upload
-    //ftpClient.ftpDownload(fileName); to download
-    // ftpClient.ftpdir(); to get list of directories 
   });
 }
-
 
 app.get("/connected_users", (req, res) => {
   let dto = [];
@@ -214,29 +227,12 @@ io.on("connection", (socket) => {
 
   socket.on("user-hanged-up", (data) => {
 
-    // let connectedUserSocketId = data.connectedUserSocketId;
-    // let connectedUserSocketIdl;
-
-    // let userDelete = hashMap.get(socket.id);
-    // hashMap.delete(socket.id);
-    // connectedUser = connectedUser.filter((user) => user.user !== userDelete);
-
-    // if (!hashMap.has(connectedUserSocketId)) {
-    //   connectedUserSocketIdl = hashMapUser.has(connectedUserSocketId) ? hashMapUser.get(connectedUserSocketId) : "";
-    // } else {
-    //   connectedUserSocketIdl = connectedUserSocketId;
-    // }
-
     for (let index = 0; index < connectedUser.length; index++) {
       if (connectedUser[index].connection_id === data.connectedUserSocketId) {
         connectedUser[index].connection_status = 1;
       }
     }
 
-    // userDelete = hashMap.get(connectedUserSocketIdl);
-    // hashMap.delete(connectedUserSocketIdl);
-    // connectedUser = connectedUser.filter((user) => user.user !== userDelete);
-    // io.to(connectedUserSocketIdl).emit("redirectHomePage", data);
   });
 
   socket.on("updateConnectionStatus", (data) => {
@@ -262,3 +258,8 @@ io.on("connection", (socket) => {
 server.listen(PORT, () => {
   console.log(`listening on ${PORT}`);
 });
+
+/*console.log = function () {
+  logFile.write(util.format.apply(null, arguments) + '\n');
+  logStdout.write(util.format.apply(null, arguments) + '\n');
+};*/

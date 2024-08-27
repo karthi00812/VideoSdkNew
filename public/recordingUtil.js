@@ -7,17 +7,43 @@ const vp9Options = { mimeType: vp9Codec };
 const recordedChunks = [];
 
 export const startRecording = () => {
-  const remoteStream = store.getState().remoteStream;
 
+  const remoteStream = document.getElementById("remote_video");
+  const localStream = document.getElementById("local_video");
+
+  let canvas = document.createElement("canvas");
+  // Capture canvas stream
+  const ctx = canvas.getContext('2d');
+  requestAnimationFrame(drawVideos.bind(this, canvas, remoteStream, localStream, ctx));
+  const canvasStream = canvas.captureStream();
   if (MediaRecorder.isTypeSupported(vp9Codec)) {
-    mediaRecorder = new MediaRecorder(remoteStream, vp9Options);
+    mediaRecorder = new MediaRecorder(canvasStream, vp9Options);
   } else {
-    mediaRecorder = new MediaRecorder(remoteStream);
+    mediaRecorder = new MediaRecorder(canvasStream);
   }
 
   mediaRecorder.ondataavailable = handleDataAvailable;
   mediaRecorder.start();
 };
+
+function drawVideos(canvas, remoteStream, localStream, ctx) {
+  // Set canvas size
+  canvas.width = remoteStream.videoWidth;
+  canvas.height = remoteStream.videoHeight;
+
+  // Clear canvas
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Draw first video
+  ctx.drawImage(remoteStream, 0, 0, canvas.width, canvas.height);
+
+  // Draw second video on top of the first (with transparency)
+  ctx.globalAlpha = 2; // Adjust transparency
+  ctx.drawImage(localStream, 0, canvas.height - 150, 150, 150);
+
+  requestAnimationFrame(drawVideos.bind(this,canvas, remoteStream, localStream, ctx));
+}
+
 
 export const pauseRecording = () => {
   mediaRecorder.pause();
@@ -50,7 +76,7 @@ const downloadRecordedVideo = () => {
   let appId = "";
   appId = store.getApplicationId();
   if (!appId) {
-    appId = "recordings-sample-name";
+    appId = `Recording${Date.now()}`; // todo we should not use this ,this is now testing purpose only.
   }
   myHeaders.append("fileName", appId);
 

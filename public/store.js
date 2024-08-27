@@ -11,7 +11,8 @@ let state = {
   userName: null,
   remoteUser: null,
   applicationid: null,
-  muted: true
+  muted: true,
+  device: ""
 };
 let mediaDevices = [];
 let videoDevices = [];
@@ -151,4 +152,12 @@ export const setMute = (mutedState) => {
 
 export const getMute = () => {
   return state.muted;
+}
+
+export const getDevice = () => {
+  return state.device;
+}
+
+export const setDevice = (deviceName) => {
+  state.device = deviceName;
 }

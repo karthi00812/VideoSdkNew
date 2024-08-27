@@ -15,6 +15,7 @@ const getFtpDetails = {
   aliveTimeout: 10000
 }
 
+// to get list of directories 
 const ftpdir = () => {
   try {
     var c = new client();
@@ -35,6 +36,7 @@ const ftpdir = () => {
   }
 }
 
+// to upload
 const ftpUpload = (file, fileName) => {
   try {
     var c = new client();
@@ -55,13 +57,14 @@ const ftpUpload = (file, fileName) => {
   }
 }
 
+// to download
 const ftpDownload = (fileName) => {
   try {
     var c = new client();
     c.on('ready', () => {
       let rempteFilePath = constants.remoteFilePath;
-      let dirPath = process.env.USERPROFILE.replace(/\\\\/g, '\/');
-      let downloadPath = constants.downloadPath;
+      let dirPath = "./recordings/";
+      //let downloadPath = constants.downloadPath;
       let fielExtension = constants.fielExtension;
       c.get(rempteFilePath + fileName, (err, stream) => {
         if (err) {
@@ -69,7 +72,7 @@ const ftpDownload = (fileName) => {
         } else {
           logger().info("got stream");
           stream.once('close', function () { c.end(); });
-          stream.pipe(fs.createWriteStream(`${dirPath + downloadPath}PBK123456789_RECORD${fielExtension}`));
+          stream.pipe(fs.createWriteStream(`${dirPath}${fileName}${fielExtension}`));
         }
       });
     });

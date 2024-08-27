@@ -75,7 +75,13 @@ export const callNFI = (msg) => {
 
   console.log(msg);
   try {
-    Android && Android.callCallBack(msg);
+
+    if (store.getDevice()==="Android" || store.getDevice()==="") {
+      Android && Android.callCallBack(msg);
+    }else if(store.getDevice()==="iphone"){
+      var callbackToIOSNative = {'VCCallbackIOS':msg};
+      window.webkit.messageHandlers.fromNodeVC.postMessage(callbackToIOSNative);
+    }
   } catch (ex) {
     console.log("NFI Android is not defined");
   }
@@ -139,21 +145,21 @@ export const showRecordingPanel = () => {
   const recordingButtons = document.getElementById("video_recording_buttons");
   showElement(recordingButtons);
 
-  // hide start recording button if it is active
-  const startRecordingButton = document.getElementById(
-    "start_recording_button"
-  );
-  hideElement(startRecordingButton);
+  // // hide start recording button if it is active
+  // const startRecordingButton = document.getElementById(
+  //   "start_recording_button"
+  // );
+  // hideElement(startRecordingButton);
 };
 
 export const resetRecordingButtons = () => {
-  const startRecordingButton = document.getElementById(
-    "start_recording_button"
-  );
+  // const startRecordingButton = document.getElementById(
+  //   "start_recording_button"
+  // );
   const recordingButtons = document.getElementById("video_recording_buttons");
 
   hideElement(recordingButtons);
-  showElement(startRecordingButton);
+  // showElement(startRecordingButton);
 };
 
 export const switchRecordingButtons = (switchForResumeButton = false) => {

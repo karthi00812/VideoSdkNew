@@ -340,7 +340,7 @@ body {
   bottom: 40px;
   left: calc(50% - 200px);
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   background: #343434;
 }
