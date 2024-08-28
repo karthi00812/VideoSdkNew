@@ -110,7 +110,7 @@ const createPeerConnection = () => {
         }
         recordingUtils.stopRecording();
         ui.resetRecordingButtons();
-        window.parent.postMessage({ event: "disconnected" }, '*');
+        window.parent.postMessage({ event: "Waiting For Call" }, '*');
       } catch (ex) {
         console.log(ex);
       }
@@ -132,9 +132,11 @@ const createPeerConnection = () => {
         if (agent.session) {
           agent.session.dispose();
         }
-        recordingUtils.startRecording();
+        if (window.location.host === "testing") {
+          recordingUtils.startRecording();
+        }
         ui.showRecordingPanel();
-        window.parent.postMessage({ event: "connected" }, '*');
+        window.parent.postMessage({ event: "In Call" }, '*');
       } catch (ex) {
         console.log(ex);
       }
