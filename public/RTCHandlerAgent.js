@@ -108,8 +108,11 @@ const createPeerConnection = () => {
         if (agent.session) {
           agent.session.start();
         }
-        recordingUtils.stopRecording();
-        ui.resetRecordingButtons();
+        if (window.location.host === "testing") {
+          recordingUtils.stopRecording();
+          ui.resetRecordingButtons();
+        }
+
         window.parent.postMessage({ event: "Waiting For Call" }, '*');
       } catch (ex) {
         console.log(ex);
@@ -134,8 +137,9 @@ const createPeerConnection = () => {
         }
         if (window.location.host === "testing") {
           recordingUtils.startRecording();
+          ui.showRecordingPanel();
         }
-        ui.showRecordingPanel();
+
         window.parent.postMessage({ event: "In Call" }, '*');
       } catch (ex) {
         console.log(ex);
@@ -380,8 +384,10 @@ const closePeerConnectionAndResetState = () => {
       connectBtn.disabled = false;
       connectBtn.style.cursor = "pointer";
       agent.session.start();
-      recordingUtils.stopRecording();
-      ui.resetRecordingButtons();
+      if (window.location.host === "testing") {
+        recordingUtils.stopRecording();
+        ui.resetRecordingButtons();
+      }
     } catch (ex) {
       console.log(ex);
     }

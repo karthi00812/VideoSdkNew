@@ -182,7 +182,7 @@ connect_vc.addEventListener("click", () => {
 
 
 // timeout 
-export let session = new IdleSessionTimeout(120 * 60 * 1000);
+export let session = new IdleSessionTimeout(30 * 60 * 1000);
 // let session = new IdleSessionTimeout(500);
 
 session.onTimeOut = () => {
