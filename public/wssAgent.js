@@ -33,30 +33,23 @@ export const registerSocketEvents = (socket) => {
 
   let ringtone = new Audio("./audio/user_disconnect.mp3");
   socket.on("disconnect", () => {
-    Swal.fire({
-      title: "You were disconnected from server!!!",
-      showDenyButton: false,
-      showCancelButton: false,
-      confirmButtonText: "Close",
-      didOpen: () => {
-        ringtone.play();
-      },
-      didClose: () => {
-        document.querySelector("#user_id").textContent = "####";
-        const connect_vc = document.querySelector("#connect_vc")
-        connect_vc.classList.add("btn-secondary");
-        connect_vc.classList.remove("btn-success");
-        connect_vc.textContent = "Connect VC";
-        connect_vc.dataset.status = "disconnected";
-      }
-    }).then((result) => {
-      if (result.isConfirmed) {
-        console.log("popup closed");
-      }
-      ringtone.pause();
-    });
+
+    const status_bar = document.querySelector("#status_bar");
+    status_bar.style.display = "flex";
+    ringtone.play();
+    ringtone.pause();
+    document.querySelector("#user_id").textContent = "####";
+    const connect_vc = document.querySelector("#connect_vc")
+    connect_vc.classList.add("btn-secondary");
+    connect_vc.classList.remove("btn-success");
+    connect_vc.textContent = "Connect VC";
+    connect_vc.dataset.status = "disconnected";
   });
 
+  socket.on("connect", () => {
+    const status_bar = document.querySelector("#status_bar");
+    status_bar.style.display = "none";
+  })
 
   socket.on("webRTC-signaling", (data) => {
     switch (data.type) {
