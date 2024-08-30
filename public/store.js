@@ -29,6 +29,7 @@ export const setSocketId = (socketId, userName) => {
 };
 
 export const setLocalStream = (stream) => {
+  console.log("LocalStream Upldated nodejs",stream);
   state = {
     ...state,
     localStream: stream,
